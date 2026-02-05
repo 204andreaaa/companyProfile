@@ -9,6 +9,7 @@ use App\Models\Gallery;
 use App\Models\HomepageSetting;
 use App\Models\HomepageService;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -42,6 +43,25 @@ class HomeController extends Controller
         return view('user.about', [
             'profile' => $profile
         ]);
+    }
+
+    public function blog()
+    {
+        $posts = Post::where('status', 'published')
+            ->latest()
+            ->paginate(6);
+
+        return view('user.blog', compact('posts'));
+    }
+
+    // BLOG DETAIL
+    public function blogDetail($slug)
+    {
+        $post = Post::where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+        return view('user.blog-detail', compact('post'));
     }
 
 }

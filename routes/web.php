@@ -21,12 +21,16 @@ Route::put('/admin/homepage', [HomepageController::class, 'update'])
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+Route::get('/blog', [HomeController::class, 'blog'])
+    ->name('blog');
+
+Route::get('/blog/{post:slug}', [HomeController::class, 'blogDetail'])
+    ->name('blog-detail');
+
 Route::get('/', function () {
     return view('user.index');
 });
 
-Route::get('/blog', function () {return view('user.blog');});
-Route::get('/blog-detail', function () {return view('user.blog-detail');});
 Route::get('/contact', function () {return view('user.contact');});
 Route::get('/service', function () {return view('user.service');});
 Route::get('/service-detail', function () {return view('user.service-detail');});

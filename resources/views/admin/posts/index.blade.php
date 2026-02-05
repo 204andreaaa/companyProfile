@@ -189,9 +189,21 @@
 </div>
 @endsection
 
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 @push('scripts')
 <script>
 $(function () {
+
+    // INIT CKEDITOR
+if (CKEDITOR.instances.body) {
+    CKEDITOR.instances.body.destroy(true);
+}
+
+CKEDITOR.replace('body', {
+    height: 250,
+    removeButtons: 'PasteFromWord',
+    filebrowserUploadMethod: 'form'
+});
 
     const fallbackImage = "{{ asset('compe/imgExample/images.png') }}";
 
@@ -262,6 +274,9 @@ $(function () {
         $('#postModalLabel').text('Tambah Berita');
         $('#image-preview').hide();
         $('#postModal').modal('show');
+        if (CKEDITOR.instances.body) {
+        CKEDITOR.instances.body.setData('');
+    }
     });
 
     // DETAIL (READ ONLY)
@@ -290,7 +305,7 @@ $(function () {
                 $('#detail-image-wrapper').hide();
             }
 
-            $('#detail-body').text(p.body || '');
+            $('#detail-body').html(p.body || '');
             $('#postDetailModal').modal('show');
         });
     });
@@ -307,7 +322,7 @@ $(function () {
             $('#title').val(p.title);
             $('#slug').val(p.slug);
             $('#excerpt').val(p.excerpt);
-            $('#body').val(p.body);
+            CKEDITOR.instances.body.setData(p.body || '');
             $('#status').val(p.status);
 
             const imgUrl = getImageUrl(p);
@@ -327,6 +342,9 @@ $(function () {
     $('#postForm').on('submit', function (e) {
         e.preventDefault();
 
+            if (CKEDITOR.instances.body) {
+        CKEDITOR.instances.body.updateElement();
+    }
         let formData = new FormData(this);
         const id = $('#post_id').val();
         let url = "{{ route('admin.posts.store') }}";
@@ -400,6 +418,5 @@ $(function () {
 });
 </script>
 @endpush
-
 
 
