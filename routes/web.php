@@ -13,20 +13,18 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\HomeController;
 
 
-
-
 Route::get('/admin', function () {
     return redirect()->route('admin.index');
 });
 Route::put('/admin/homepage', [HomepageController::class, 'update'])
     ->name('admin.homepage.update');
 
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/', function () {
     return view('user.index');
 });
 
-Route::get('/about', function () {return view('user.about');});
 Route::get('/blog', function () {return view('user.blog');});
 Route::get('/blog-detail', function () {return view('user.blog-detail');});
 Route::get('/contact', function () {return view('user.contact');});
@@ -47,9 +45,6 @@ Route::get('/admin/homepage/services',[HomepageController::class, 'services'])
 
 Route::put('/admin/homepage/services',[HomepageController::class, 'updateServices'])
     ->name('admin.homepage.services.update');
-
-
-
 
 // GROUP ADMIN (belum pakai auth dulu)
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -8,13 +8,13 @@ use App\Models\VisionMission;
 use App\Models\Gallery;
 use App\Models\HomepageSetting;
 use App\Models\HomepageService;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
         $homepage = HomepageSetting::orderBy('id')->first();
-        $company       = CompanyProfile::first();
         $services = HomepageService::where('is_active', true)
         ->orderBy('order')
         ->get();
@@ -24,13 +24,24 @@ class HomeController extends Controller
         $galleries = Gallery::where('is_active', true)
             ->latest()          // kalau mau berdasarkan created_at, bisa diganti ->orderBy('id','desc')
             ->get();
-
+        
         return view('user.home', [
             'homepage'      => $homepage,
-            'company'       => $company,
             'services'      => $services,
             'visionMission' => $visionMission,
             'galleries'     => $galleries,
+
         ]);
     }
+
+    
+        public function about()
+    {
+        $profile = CompanyProfile::first();
+
+        return view('user.about', [
+            'profile' => $profile
+        ]);
+    }
+
 }
