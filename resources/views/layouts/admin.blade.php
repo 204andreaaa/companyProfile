@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{asset('admin/dist/assets/css/style.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/dist/assets/css/components.css')}}">
 <link rel="stylesheet" href="{{ asset('admin/dist/assets/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -352,6 +354,8 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- General JS Scripts -->
   <script src="{{asset('admin/dist/assets/modules/jquery.min.js')}}"></script>
   <script src="{{asset('admin/dist/assets/modules/popper.js')}}"></script>
@@ -383,6 +387,7 @@
   <!-- Template JS File -->
   <script src="{{asset('admin/dist/assets/js/scripts.js')}}"></script>
   <script src="{{asset('admin/dist/assets/js/custom.js')}}"></script>
+  
 
   @stack('scripts')
 </body>

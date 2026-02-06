@@ -10,6 +10,8 @@ use App\Models\HomepageSetting;
 use App\Models\HomepageService;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\ContactMessage;
+
 
 class HomeController extends Controller
 {
@@ -54,7 +56,7 @@ class HomeController extends Controller
         return view('user.blog', compact('posts'));
     }
 
-    // BLOG DETAIL
+    // BLOG DETAIL 
     public function blogDetail($slug)
     {
         $post = Post::where('slug', $slug)
@@ -63,5 +65,25 @@ class HomeController extends Controller
 
         return view('user.blog-detail', compact('post'));
     }
+
+    public function contactStore(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        ContactMessage::create([
+            'name'    => $request->name,
+            'email'   => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ]);
+
+        return back()->with('success', 'Pesan berhasil dikirim!');
+    }
+
 
 }

@@ -27,6 +27,14 @@ Route::get('/blog', [HomeController::class, 'blog'])
 Route::get('/blog/{post:slug}', [HomeController::class, 'blogDetail'])
     ->name('blog-detail');
 
+Route::post('/contact', [HomeController::class, 'contactStore'])->name('contact.store');
+
+
+
+
+
+
+
 Route::get('/', function () {
     return view('user.index');
 });
@@ -64,6 +72,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ->name('products.index');
     
     Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
+
+    Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy']);
+
+    Route::post('/messages/read/{id}', [ContactMessageController::class, 'markRead']);
+
         
         Route::resource('gallery', GalleryController::class)->except(['create', 'edit']);
         Route::resource('posts', PostController::class)->except(['create', 'edit']);
