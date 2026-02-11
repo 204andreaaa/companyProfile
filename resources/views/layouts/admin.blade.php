@@ -327,6 +327,11 @@
             </a>
             </li>
 
+            <li class="{{ request()->routeIs('admin.service.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.service.index') }}">
+                <i class="fas fa-cogs"></i> <span>Layanan</span>
+            </a>
+            </li>
         </ul>
 
 
@@ -383,6 +388,9 @@
 
   <!-- Page Specific JS File -->
   <script src="{{asset('admin/dist/assets/js/page/modules-datatables.js')}}"></script>
+
+  <!-- CKEditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   
   <!-- Template JS File -->
   <script src="{{asset('admin/dist/assets/js/scripts.js')}}"></script>

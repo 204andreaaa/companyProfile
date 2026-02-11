@@ -10,7 +10,10 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\HomeController;
+
+
 
 
 Route::get('/admin', function () {
@@ -29,19 +32,15 @@ Route::get('/blog/{post:slug}', [HomeController::class, 'blogDetail'])
 
 Route::post('/contact', [HomeController::class, 'contactStore'])->name('contact.store');
 
+Route::get('/service', [HomeController::class, 'service'])
+    ->name('service');
+
+Route::get('/service/{slug}', [HomeController::class, 'serviceDetail'])
+    ->name('service.detail');
+    
 
 
 
-
-
-
-Route::get('/', function () {
-    return view('user.index');
-});
-
-Route::get('/contact', function () {return view('user.contact');});
-Route::get('/service', function () {return view('user.service');});
-Route::get('/service-detail', function () {return view('user.service-detail');});
 Route::get('/genset', function () {return view('user.genset');});
 Route::get('/genset-detail', function () {return view('user.genset-detail');});
 
@@ -73,9 +72,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
 
+    Route::post('/messages/read/{id}', [ContactMessageController::class, 'markRead']);
+    
     Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy']);
 
-    Route::post('/messages/read/{id}', [ContactMessageController::class, 'markRead']);
+    Route::get('/service', [ServiceController::class, 'index'])
+        ->name('service.index');
+
+    Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])
+        ->name('service.edit');
+
+    Route::put('/service/{id}', [ServiceController::class, 'update'])
+        ->name('service.update');
+
 
         
         Route::resource('gallery', GalleryController::class)->except(['create', 'edit']);

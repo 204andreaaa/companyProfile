@@ -11,6 +11,8 @@ use App\Models\HomepageService;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\ContactMessage;
+use App\Models\Service;
+
 
 
 class HomeController extends Controller
@@ -83,6 +85,24 @@ class HomeController extends Controller
         ]);
 
         return back()->with('success', 'Pesan berhasil dikirim!');
+    }
+
+    public function service()
+    {
+        $services = Service::where('is_active', 1)
+            ->orderBy('id')
+            ->get();
+
+        return view('user.service', compact('services'));
+    }
+
+    public function serviceDetail($slug)
+    {
+        $service = Service::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('user.service-detail', compact('service'));
     }
 
 

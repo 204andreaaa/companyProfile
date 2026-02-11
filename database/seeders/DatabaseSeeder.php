@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\ProductSeeder::class,
             \Database\Seeders\PostSeeder::class,
             \Database\Seeders\ContactMessageSeeder::class,
+            \Database\Seeders\ServiceSeeder::class,
             
         ]);
     }
