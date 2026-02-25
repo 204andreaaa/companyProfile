@@ -8,11 +8,6 @@ return new class extends Migration {
 
     public function up(): void
     {
-        /*
-        |--------------------------------------------------------------------------
-        | BRANDS TABLE
-        |--------------------------------------------------------------------------
-        */
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -22,13 +17,9 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        /*
-        |--------------------------------------------------------------------------
-        | GENSET SPECS TABLE (Per Tipe + Image)
-        |--------------------------------------------------------------------------
-        */
         Schema::create('genset_specs', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('brand_id')
                   ->constrained('brands')
                   ->onDelete('cascade');
@@ -36,16 +27,31 @@ return new class extends Migration {
             $table->string('model');
             $table->string('engine');
             $table->string('alternator');
-            $table->integer('kva');
-            $table->integer('kw');
-            $table->float('fuel');
 
-            // 🔥 gambar per tipe
+            // OUTPUT
+            $table->integer('prp_kva')->nullable();
+            $table->integer('esp_kva')->nullable();
+            $table->integer('prp_kw')->nullable();
+            $table->integer('esp_kw')->nullable();
+
+            $table->float('fuel')->nullable();
+
+            // OPEN TYPE
+            $table->integer('l_open')->nullable();
+            $table->integer('w_open')->nullable();
+            $table->integer('h_open')->nullable();
+            $table->integer('kg_open')->nullable();
+
+            // SILENT TYPE
+            $table->integer('l_silent')->nullable();
+            $table->integer('w_silent')->nullable();
+            $table->integer('h_silent')->nullable();
+            $table->integer('kg_silent')->nullable();
+
             $table->string('image')->nullable();
 
             $table->timestamps();
 
-            // optional: prevent duplicate model per brand
             $table->unique(['brand_id','model']);
         });
     }

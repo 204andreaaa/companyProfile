@@ -32,39 +32,60 @@ class GensetSeeder extends Seeder
                 'is_active' => true,
             ]);
 
-            // Dummy specs + image kosong (fallback nanti dari accessor)
-            GensetSpec::create([
-                'brand_id' => $brand->id,
-                'model' => 'APP10',
-                'engine' => '4030x11G',
-                'alternator' => 'PI044E',
-                'kva' => 10,
-                'kw' => 8,
-                'fuel' => 2.8,
-                'image' => null
-            ]);
+            // Generate 10 specs per brand
+            for ($i = 1; $i <= 10; $i++) {
 
-            GensetSpec::create([
-                'brand_id' => $brand->id,
-                'model' => 'APP20',
-                'engine' => '4030x11G',
-                'alternator' => 'PI044E',
-                'kva' => 20,
-                'kw' => 16,
-                'fuel' => 5.3,
-                'image' => null
-            ]);
+                // Base KVA naik per level
+                $baseKva = $i * 20;
 
-            GensetSpec::create([
-                'brand_id' => $brand->id,
-                'model' => 'APP30',
-                'engine' => '4030x11G',
-                'alternator' => 'PI044E',
-                'kva' => 30,
-                'kw' => 24,
-                'fuel' => 7.2,
-                'image' => null
-            ]);
+                $prpKva = $baseKva;
+                $espKva = $baseKva + 2;
+
+                // KW kira-kira 0.8 dari KVA
+                $prpKw = round($prpKva * 0.8);
+                $espKw = round($espKva * 0.8);
+
+                // Fuel random realistis
+                $fuel = round(($prpKw * 0.25), 1);
+
+                // Dimensi Open
+                $lOpen = 1500 + ($i * 120);
+                $wOpen = 900 + ($i * 30);
+                $hOpen = 1100 + ($i * 40);
+                $kgOpen = 800 + ($i * 150);
+
+                // Dimensi Silent (lebih besar & berat)
+                $lSilent = $lOpen + 300;
+                $wSilent = $wOpen + 100;
+                $hSilent = $hOpen + 150;
+                $kgSilent = $kgOpen + 250;
+
+                GensetSpec::create([
+                    'brand_id' => $brand->id,
+                    'model' => 'APP-' . str_pad($i, 2, '0', STR_PAD_LEFT),
+                    'engine' => 'Engine-' . rand(1000, 9999),
+                    'alternator' => 'ALT-' . rand(100, 999),
+
+                    'prp_kva' => $prpKva,
+                    'esp_kva' => $espKva,
+                    'prp_kw'  => $prpKw,
+                    'esp_kw'  => $espKw,
+
+                    'fuel' => $fuel,
+
+                    'l_open' => $lOpen,
+                    'w_open' => $wOpen,
+                    'h_open' => $hOpen,
+                    'kg_open' => $kgOpen,
+
+                    'l_silent' => $lSilent,
+                    'w_silent' => $wSilent,
+                    'h_silent' => $hSilent,
+                    'kg_silent' => $kgSilent,
+
+                    'image' => null
+                ]);
+            }
         }
     }
 }

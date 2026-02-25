@@ -37,11 +37,18 @@ Route::get('/service', [HomeController::class, 'service'])
 Route::get('/service/{slug}', [HomeController::class, 'serviceDetail'])
     ->name('service.detail');
 
+Route::get('/genset/{brand}/download-pdf',[HomeController::class, 'downloadGensetPdf']
+)->name('genset.download.pdf');
 
 Route::get('/genset', [HomeController::class, 'genset'])
     ->name('user.genset');
 Route::get('/genset/{slug}', [HomeController::class, 'gensetDetail'])
     ->name('user.genset.detail');
+
+Route::get('/genset/{brandSlug}/{modelSlug}',[HomeController::class, 'detailModel'])
+    ->name('user.genset.model.detail');
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -85,6 +92,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/genset/brand/{id}', [ProductController::class, 'updateBrand'])
         ->name('genset.updateBrand');
 
+    Route::post('/genset/brand/store',[ProductController::class,'storeBrand'])
+       ->name('genset.storeBrand');
+
+    Route::delete('/genset/brand/{id}',[ProductController::class,'deleteBrand'])
+       ->name('genset.deleteBrand');
+
     Route::post('/genset/spec', [ProductController::class, 'storeSpec'])
         ->name('genset.storeSpec');
 
@@ -106,6 +119,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::put('/homepage/services',[HomepageController::class, 'updateServices'])
     ->name('homepage.services.update');
+
 
 
 

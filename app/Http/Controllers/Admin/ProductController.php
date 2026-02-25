@@ -9,24 +9,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-
-
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
         $brands = Brand::all();
 
-        // ambil brand pertama sebagai default
-        $selectedBrand = null;
-
-        if ($request->brand) {
-            $selectedBrand = Brand::with('specs')
-                ->find($request->brand);
-        } else {
-            $selectedBrand = Brand::with('specs')
-                ->first();
-        }
+        $selectedBrand = $request->brand
+            ? Brand::with('specs')->find($request->brand)
+            : Brand::with('specs')->first();
 
         $models = collect();
 
@@ -42,68 +33,6 @@ class ProductController extends Controller
             'models'
         ));
     }
-
-
-
-
-    /* ================= BRAND ================= */
-
-    public function storeBrand(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'logo' => 'nullable|image'
-        ]);
-
-        $data = [
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'is_active' => 1
-        ];
-
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public',$filename);
-            $data['logo'] = $filename;
-        }
-
-        Brand::create($data);
-
-        return back()->with('success','Brand created!');
-    }
-
-    public function updateBrand(Request $request,$id)
-    {
-        $brand = Brand::findOrFail($id);
-
-        $data = [
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'is_active' => $request->is_active
-        ];
-
-        if ($request->hasFile('logo')) {
-
-            // delete logo lama
-            if ($brand->logo && Storage::exists('public/'.$brand->logo)) {
-                Storage::delete('public/'.$brand->logo);
-            }
-
-            $file = $request->file('logo');
-            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public',$filename);
-
-            $data['logo'] = $filename;
-        }
-
-        $brand->update($data);
-
-        return back()->with('success','Brand updated!');
-    }
-
-
-    /* ================= SPEC ================= */
 
     public function storeSpec(Request $request)
     {
@@ -122,7 +51,29 @@ class ProductController extends Controller
             return back()->with('error','Model already exists for this brand!');
         }
 
-        $data = $request->except('image');
+        $data = $request->only([
+            'brand_id',
+            'model',
+            'engine',
+            'alternator',
+
+            'prp_kva',
+            'esp_kva',
+            'prp_kw',
+            'esp_kw',
+
+            'fuel',
+
+            'l_open',
+            'w_open',
+            'h_open',
+            'kg_open',
+
+            'l_silent',
+            'w_silent',
+            'h_silent',
+            'kg_silent',
+        ]);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -136,47 +87,124 @@ class ProductController extends Controller
         return back()->with('success','Spec added!');
     }
 
+    public function updateSpec(Request $request,$id)
+    {
+        $spec = GensetSpec::findOrFail($id);
 
+        $data = $request->only([
+            'model','engine','alternator',
 
-public function updateSpec(Request $request,$id)
-{
-    $spec = GensetSpec::findOrFail($id);
+            'prp_kva','esp_kva','prp_kw','esp_kw',
 
-    $data = $request->only([
-        'model','engine','alternator','kva','kw','fuel'
-    ]);
+            'fuel',
 
-    if ($request->hasFile('image')) {
+            'l_open','w_open','h_open','kg_open',
 
-        // hapus file lama kalau ada
+            'l_silent','w_silent','h_silent','kg_silent'
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            if ($spec->image && Storage::exists('public/'.$spec->image)) {
+                Storage::delete('public/'.$spec->image);
+            }
+
+            $file = $request->file('image');
+            $filename = 'gensets/'.time().'_'.$file->getClientOriginalName();
+            $file->storeAs('public',$filename);
+
+            $data['image'] = $filename;
+        }
+
+        $spec->update($data);
+
+        return back()->with('success','Spec updated!');
+    }
+
+    public function deleteSpec($id)
+    {
+        $spec = GensetSpec::findOrFail($id);
+
         if ($spec->image && Storage::exists('public/'.$spec->image)) {
             Storage::delete('public/'.$spec->image);
         }
 
-        $file = $request->file('image');
-        $filename = 'gensets/'.time().'_'.$file->getClientOriginalName();
-        $file->storeAs('public', $filename);
+        $spec->delete();
 
-        $data['image'] = $filename;
+        return back()->with('success','Spec deleted!');
+    }
+    public function updateBrand(Request $request, $id)
+    {
+        $brand = Brand::findOrFail($id);
+
+        $data = [
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'is_active' => $request->is_active,
+        ];
+
+        // ⚠️ HANYA update logo kalau ada file baru
+        if ($request->hasFile('logo')) {
+
+            // hapus file lama kalau ada
+            if ($brand->logo && Storage::exists('public/'.$brand->logo)) {
+                Storage::delete('public/'.$brand->logo);
+            }
+
+            $file = $request->file('logo');
+            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
+
+            $data['logo'] = $filename;
+        }
+
+        $brand->update($data);
+
+        return back()->with('success','Brand updated!');
     }
 
-    $spec->update($data);
+    // ================= STORE BRAND =================
+    public function storeBrand(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:brands,name',
+            'logo' => 'nullable|image'
+        ]);
 
-    return back()->with('success','Spec updated!');
-}
+        $data = [
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'is_active' => 1
+        ];
 
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
+            $file->storeAs('public',$filename);
+            $data['logo'] = $filename;
+        }
 
-public function deleteSpec($id)
-{
-    $spec = GensetSpec::findOrFail($id);
+        Brand::create($data);
 
-    if ($spec->image && Storage::exists('public/'.$spec->image)) {
-        Storage::delete('public/'.$spec->image);
+        return back()->with('success','Brand added!');
     }
 
-    $spec->delete();
+    // ================= DELETE BRAND =================
+    public function deleteBrand($id)
+    {
+        $brand = Brand::findOrFail($id);
 
-    return back()->with('success','Spec deleted!');
-}
+        if ($brand->specs()->count() > 0) {
+            return back()->with('error','Cannot delete brand with specs!');
+        }
 
+        if ($brand->logo && Storage::exists('public/'.$brand->logo)) {
+            Storage::delete('public/'.$brand->logo);
+        }
+
+        $brand->delete();
+
+        return redirect()->route('admin.genset.index')
+            ->with('success','Brand deleted!');
+    }
 }

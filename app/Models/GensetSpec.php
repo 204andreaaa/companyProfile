@@ -11,9 +11,24 @@ class GensetSpec extends Model
         'model',
         'engine',
         'alternator',
-        'kva',
-        'kw',
+
+        'prp_kva',
+        'esp_kva',
+        'prp_kw',
+        'esp_kw',
+
         'fuel',
+
+        'l_open',
+        'w_open',
+        'h_open',
+        'kg_open',
+
+        'l_silent',
+        'w_silent',
+        'h_silent',
+        'kg_silent',
+
         'image'
     ];
 
@@ -22,16 +37,12 @@ class GensetSpec extends Model
         return $this->belongsTo(Brand::class);
     }
 
-public function getImageUrlAttribute()
-{
-    if ($this->image && file_exists(public_path('storage/'.$this->image))) {
-        return asset('storage/'.$this->image);
+    public function getImageUrlAttribute()
+    {
+        if ($this->image && file_exists(public_path('storage/'.$this->image))) {
+            return asset('storage/'.$this->image);
+        }
+
+        return asset('genset-website/imgGenset/1.jpg');
     }
-
-    // fallback dummy
-    return asset('genset-website/imgGenset/1.jpg');
 }
-
-
-}
-

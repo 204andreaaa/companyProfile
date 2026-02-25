@@ -13,6 +13,7 @@ use App\Models\Post;
 use App\Models\ContactMessage;
 use App\Models\Service;
 use App\Models\Brand;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 
@@ -113,21 +114,43 @@ class HomeController extends Controller
     }
 
     public function genset()
-{
-    $brands = Brand::where('is_active', true)->get();
-    return view('user.genset', compact('brands'));
-}
+    {
+        $brands = Brand::where('is_active', true)->get();
+        return view('user.genset', compact('brands'));
+    }
 
-public function gensetDetail($slug)
-{
-    $brand = Brand::where('slug', $slug)
-        ->with('specs')
-        ->firstOrFail();
+    public function gensetDetail($slug)
+    {
+        $brand = Brand::where('slug', $slug)
+            ->with('specs')
+            ->firstOrFail();
 
-    return view('user.genset-detail', compact('brand'));
-}
+        return view('user.genset-detail', compact('brand'));
+    }
 
+    public function detailModel($brandSlug, $modelSlug)
+    {
+        $brand = \App\Models\Brand::where('slug', $brandSlug)
+            ->where('is_active', 1)
+            ->firstOrFail();
 
+        $spec = \App\Models\GensetSpec::where('brand_id', $brand->id)
+            ->whereRaw('LOWER(model) = ?', [strtolower($modelSlug)])
+            ->firstOrFail();
 
+        return view('user.detail-model', compact('brand', 'spec'));
+    }
+
+    public function downloadGensetPdf($brandSlug)
+    {
+        $brand = Brand::where('slug', $brandSlug)
+            ->with('specs')
+            ->firstOrFail();
+
+        $pdf = Pdf::loadView('exports.genset-pdf', compact('brand'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download($brand->name.'_catalog.pdf');
+    }
 
 }
