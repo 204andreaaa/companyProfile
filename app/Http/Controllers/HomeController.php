@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller as Controller;
 use App\Models\Brand;
-use App\Http\Controllers\Controller;
 use App\Models\CompanyProfile;
 use App\Models\ContactMessage;
 use App\Models\Gallery;
