@@ -27,7 +27,7 @@
         <!-- ===== TOP HEADER ===== -->
         <div class="row top-header align-items-center">
             <div class="col-md-6">
-                <img class="img-fluid" src="{{ asset('genset-website/imgGenset/logo.png') }}" alt="Bach Multi Global">
+                <img class="img-fluid" src="{{ $globalSettings->logo_url }}" alt="Bach Multi Global">
             </div>
             <div class="col-md-6 header-right">
                 <strong>Sales & Service:</strong> 021-3862351<br>
@@ -123,7 +123,8 @@
 
 
         <!-- ===== WHATSAPP FLOAT ===== -->
-        <a href="https://wa.me/6281234567890?text=Halo%20saya%20ingin%20tanya%20tentang%20produk" class="wa-float"
+        <a href="https://wa.me/{{ $globalSettings->whatsapp_number }}?text=Halo%20saya%20ingin%20tanya"
+            class="wa-float"
             target="_blank">
 
             <span class="wa-tooltip">Chat via WhatsApp</span>

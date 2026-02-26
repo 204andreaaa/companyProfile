@@ -8,13 +8,14 @@ use App\Models\Brand;
 use App\Models\CompanyProfile;
 use App\Models\ContactMessage;
 use App\Models\Gallery;
-use App\Models\GensetSpec;
 use App\Models\GensetInquiry;
+use App\Models\GensetSpec;
 use App\Models\HomepageService;
 use App\Models\HomepageSetting;
 use App\Models\Post;
 use App\Models\Service;
 use App\Models\VisionMission;
+use App\Models\WebsiteSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -76,7 +77,9 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return view('user.contact');
+            $settings = WebsiteSetting::first();
+
+        return view('user.contact', compact('settings'));
     }
 
     public function contactStore(Request $request)

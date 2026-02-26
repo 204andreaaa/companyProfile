@@ -36,16 +36,23 @@
             <!-- MAP -->
             <div class="col-md-5">
                 <div class="contact-title">FIND US</div>
-                <div class="map-box">
-                    <iframe src="https://www.google.com/maps?q=Cideng%20Barat%20No.81%20Jakarta&output=embed"
-                        loading="lazy">
-                    </iframe>
-                </div>
+                    <div class="map-box">
+                        @if($settings?->map_embed_url)
+                            <iframe
+                                src="{{ $settings->map_embed_url }}"
+                                width="100%"
+                                height="100%"
+                                style="border:0;"
+                                loading="lazy">
+                            </iframe>
+                        @else
+                            <div class="text-muted">Map not configured.</div>
+                        @endif
+                    </div>
+
                 <div class="address">
                     <strong>PT. BACH MULTI GLOBAL</strong><br>
-                    Wisma B1<br>
-                    Cideng Barat No.81<br>
-                    Jakarta Pusat 10150
+                    {!! nl2br(e($settings?->address)) !!}
                 </div>
             </div>
         </div>

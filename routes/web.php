@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\HomepageController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\CompanyValueController;
-use App\Http\Controllers\Admin\VisionMissionController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\GensetInquiryController;
+use App\Http\Controllers\Admin\HomepageController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\VisionMissionController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -135,7 +136,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::delete('/requests/{inquiry}',[GensetInquiryController::class, 'destroy']);
 
-
+    Route::get('/settings', [WebsiteSettingController::class, 'index'])->name('settings');
+    Route::post('/settings', [WebsiteSettingController::class, 'update'])->name('settings.update');
         
 
         Route::resource('posts', PostController::class)->except(['create', 'edit']);
