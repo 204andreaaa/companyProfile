@@ -39,9 +39,6 @@
                 <a href="tel:{{ $phoneClean }}" class="text-dark text-decoration-none">
                     {{ $globalSettings?->whatsapp_number ?? '-' }}
                 </a><br>
-
-                PT. BACH MULTI GLOBAL<br>
-
                 {!! nl2br(e($globalSettings?->address)) !!}
             </div>
         </div>

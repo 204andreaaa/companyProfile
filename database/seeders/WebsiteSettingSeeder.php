@@ -9,7 +9,7 @@ class WebsiteSettingSeeder extends Seeder
 {
     public function run(): void
     {
-        $address = 'PT. Bach Multi Global Jakarta';
+        $address = 'PT. BIMASAKTI PRIMA PERKASA';
         $zoom = 18;
 
         WebsiteSetting::updateOrCreate(
