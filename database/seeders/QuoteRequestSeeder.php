@@ -32,7 +32,6 @@ class QuoteRequestSeeder extends Seeder
                 'note' => fake()->sentence(),
                 'brand_id' => $spec->brand_id,
                 'genset_spec_id' => $spec->id,
-                'status' => collect(['new','contacted','closed','deal'])->random()
             ]);
         }
     }

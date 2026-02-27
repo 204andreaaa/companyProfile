@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\Brand;
+use App\Models\WebsiteSetting;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,9 +21,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-            view()->composer('layouts.userLayouts', function ($view) {
-        $footerBrands = Brand::where('is_active', 1)->get();
-        $view->with('footerBrands', $footerBrands);
-    });
+        view()->composer('layouts.userLayouts', function ($view) {
+
+            $footerBrands = Brand::where('is_active', 1)->get();
+            $settings = WebsiteSetting::first();
+
+            $view->with([
+                'footerBrands' => $footerBrands,
+                'globalSettings' => $settings
+            ]);
+        });
     }
 }

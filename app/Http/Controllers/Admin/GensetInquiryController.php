@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GensetInquiry;
+use App\Models\WebsiteSetting;
 
 
 class GensetInquiryController extends Controller
@@ -18,8 +19,9 @@ class GensetInquiryController extends Controller
         $inquiries = GensetInquiry::with('spec.brand')
                         ->latest()
                         ->get();
+        $settings = WebsiteSetting::first();
 
-        return view('admin.requests.index', compact('inquiries'));
+        return view('admin.requests.index', compact('inquiries','settings'));
     }
 
     /*
@@ -66,13 +68,11 @@ class GensetInquiryController extends Controller
 
             'brand' => optional($q->spec->brand)->name,
             'model' => optional($q->spec)->model,
-
             'engine' => optional($q->spec)->engine,
             'alternator' => optional($q->spec)->alternator,
 
-            'image_url' => $q->spec && $q->spec->image
-                ? asset('storage/' . $q->spec->image)
-                : null,
+            // 🔥 cukup panggil accessor
+            'image_url' => optional($q->spec)->image_url,
 
             'created_at' => optional($q->created_at)->format('d-m-Y H:i'),
         ];

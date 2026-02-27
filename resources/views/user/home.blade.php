@@ -38,16 +38,18 @@
 
     <!-- ===== SERVICES ===== -->
     <div class="section">
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
+
             @foreach ($services as $service)
-                <div class="col-md-3">
-                    <div class="service-card">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+                    <div class="service-card w-100 text-center">
                         <div class="service-icon">{{ $service->icon }}</div>
                         <h6>{{ $service->title }}</h6>
                         <p>{{ $service->subtitle }}</p>
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
 

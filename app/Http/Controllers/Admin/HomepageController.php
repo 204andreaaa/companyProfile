@@ -14,12 +14,11 @@ class HomepageController extends Controller
     public function index()
     {
         $homepage = HomepageSetting::first();
-        $services = HomepageService::all();
 
         return view('admin.homepage.index', [
             'title'    => 'Homepage',
             'homepage' => $homepage,
-            'services' => HomepageService::where('is_active', true)->get(),
+            'services' => HomepageService::orderBy('order')->get(), // TAMPILKAN SEMUA
         ]);
     }
 
@@ -100,18 +99,23 @@ class HomepageController extends Controller
 
     public function updateServices(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'services' => 'required|array',
             'services.*.title' => 'required|string',
             'services.*.subtitle' => 'nullable|string',
             'services.*.icon' => 'nullable|string',
+            'services.*.is_active' => 'required|in:0,1',
         ]);
 
-        foreach ($data['services'] as $id => $service) {
-            HomepageService::where('id', $id)->update([
-                'title' => $service['title'],
-                'subtitle' => $service['subtitle'] ?? null,
-                'icon' => $service['icon'] ?? null,
+        foreach ($request->services as $id => $serviceData) {
+
+            $service = HomepageService::findOrFail($id);
+
+            $service->update([
+                'title' => $serviceData['title'],
+                'subtitle' => $serviceData['subtitle'] ?? null,
+                'icon' => $serviceData['icon'] ?? null,
+                'is_active' => $serviceData['is_active'],
             ]);
         }
 

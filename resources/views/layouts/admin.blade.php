@@ -333,6 +333,13 @@
             </a>
             </li>
 
+           <li class="{{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('admin.settings') }}">
+                  <i class="fas fa-sliders-h"></i>
+                  <span>Website Settings</span>
+              </a>
+          </li>
+
         </ul>
 
 
