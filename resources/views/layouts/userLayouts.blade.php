@@ -29,10 +29,20 @@
             <div class="col-md-6">
                 <img class="img-fluid" src="{{ $globalSettings->logo_url }}" alt="Bach Multi Global">
             </div>
-            <div class="col-md-6 header-right">
-                <strong>Sales & Service:</strong> 021-3862351<br>
+            @php
+                $phoneRaw = $globalSettings?->whatsapp_number;
+                $phoneClean = preg_replace('/[^0-9]/', '', $phoneRaw);
+            @endphp
+
+            <div class="col-md-6 header-right text-md-end text-center mt-3 mt-md-0">
+                <strong>Sales & Service:</strong>
+                <a href="tel:{{ $phoneClean }}" class="text-dark text-decoration-none">
+                    {{ $globalSettings?->whatsapp_number ?? '-' }}
+                </a><br>
+
                 PT. BACH MULTI GLOBAL<br>
-                Jakarta Pusat<br>
+
+                {!! nl2br(e($globalSettings?->address)) !!}
             </div>
         </div>
 
@@ -124,13 +134,11 @@
 
         <!-- ===== WHATSAPP FLOAT ===== -->
         @php
-        $wa = preg_replace('/^0/', '62', $globalSettings->whatsapp_number);
-        $wa = preg_replace('/[^0-9]/', '', $wa);
+            $wa = preg_replace('/^0/', '62', $globalSettings->whatsapp_number);
+            $wa = preg_replace('/[^0-9]/', '', $wa);
         @endphp
 
-        <a href="https://wa.me/{{ $wa }}?text=Halo%20saya%20ingin%20tanya"
-        class="wa-float"
-        target="_blank">
+        <a href="https://wa.me/{{ $wa }}?text=Halo%20saya%20ingin%20tanya" class="wa-float" target="_blank">
 
             <span class="wa-tooltip">Chat via WhatsApp</span>
 

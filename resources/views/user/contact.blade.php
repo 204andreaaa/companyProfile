@@ -51,8 +51,9 @@
                     </div>
 
                 <div class="address">
-                    <strong>PT. BACH MULTI GLOBAL</strong><br>
-                    {!! nl2br(e($settings?->address)) !!}
+                    <strong>
+                    {!! nl2br(e($settings?->address)) !!}    
+                    </strong><br>
                 </div>
             </div>
         </div>
