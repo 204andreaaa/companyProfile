@@ -11,7 +11,7 @@ class WebsiteSettingSeeder extends Seeder
     {
         $locationName = 'PT. BIMASAKTI PRIMA PERKASA';
 
-        $address = 'Jl. Raya Industri No 15, Bekasi, Jawa Barat, Indonesia';
+        $address = 'Wisma 81, Jl. Cideng Barat No.81, Cideng, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10150';
 
         $zoom = 18;
 
