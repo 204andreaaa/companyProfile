@@ -22,6 +22,7 @@ class WebsiteSettingController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            'location_name' => 'nullable|string|max:150',
             'whatsapp_number' => 'nullable|string|max:30',
             'address' => 'nullable|string',
             'map_zoom' => 'nullable|integer|min:10|max:20',
@@ -31,6 +32,7 @@ class WebsiteSettingController extends Controller
         $settings = WebsiteSetting::first();
 
         $data = [
+            'location_name' => $request->location_name,
             'whatsapp_number' => $request->whatsapp_number,
             'address' => $request->address,
             'map_zoom' => $request->map_zoom ?? 17,

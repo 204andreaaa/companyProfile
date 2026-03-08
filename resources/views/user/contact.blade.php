@@ -51,9 +51,15 @@
                     </div>
 
                 <div class="address">
-                    <strong>
-                    {!! nl2br(e($settings?->address)) !!}    
-                    </strong><br>
+
+                    @if($settings?->location_name)
+                    <strong>{{ $settings->location_name }}</strong><br>
+                    @endif
+
+                    @if($settings?->address)
+                    {!! nl2br(e($settings->address)) !!}
+                    @endif
+
                 </div>
             </div>
         </div>

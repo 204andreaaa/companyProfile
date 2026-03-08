@@ -9,27 +9,35 @@ class WebsiteSettingSeeder extends Seeder
 {
     public function run(): void
     {
-        $address = 'PT. BIMASAKTI PRIMA PERKASA';
+        $locationName = 'PT. BIMASAKTI PRIMA PERKASA';
+
+        $address = 'Jl. Raya Industri No 15, Bekasi, Jawa Barat, Indonesia';
+
         $zoom = 18;
 
         WebsiteSetting::updateOrCreate(
             ['id' => 1],
             [
+                'location_name' => $locationName,
+
                 'whatsapp_number' => '6281234567890',
+
                 'address' => $address,
+
                 'map_zoom' => $zoom,
+
                 'map_embed_url' =>
                     "https://www.google.com/maps?q=" . urlencode($address) . "&z={$zoom}&output=embed",
 
                 'wa_template' => "Halo {name},
 
-                    Terima kasih atas inquiry Anda mengenai:
-                    {brand} {model}
+Terima kasih atas inquiry Anda mengenai:
+{brand} {model}
 
-                    Catatan:
-                    {note}
+Catatan:
+{note}
 
-                    Tim kami akan segera menghubungi Anda."
+Tim kami akan segera menghubungi Anda."
             ]
         );
     }
