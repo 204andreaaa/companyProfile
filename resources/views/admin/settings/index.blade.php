@@ -56,6 +56,15 @@
                             </small>
                         </div>
 
+                        <!-- NAME ADDRESS -->
+                        <div class="mb-4">
+                            <label class="font-weight-bold">Location Name</label>
+                            <input type="text"
+                                name="location_name"
+                                class="form-control"
+                                value="{{ $settings->location_name }}"> 
+                        </div>
+
                         <!-- ADDRESS -->
                         <div class="mb-4">
                             <label class="font-weight-bold">Address</label>

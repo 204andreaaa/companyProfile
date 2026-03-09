@@ -1,42 +1,55 @@
 @extends('layouts.userLayouts')
 @section('content')
     <!-- ===== HERO ===== -->
-    <div class="hero">
-        <div class="swiper heroSwiper">
-            <div class="swiper-wrapper">
 
-                @php
-                    $heroImages = $homepage->hero_images ?? [];
-                @endphp
+    <div class="hero-section">
 
-                @if (!empty($heroImages))
-                    @foreach ($heroImages as $slide)
-                        <div class="swiper-slide">
-                            <img src="{{ Storage::url($slide['image']) }}"
-                                style="width:100%; height:500px; object-fit:cover;">
-                        </div>
-                    @endforeach
-                @else
-                    @for ($i = 1; $i <= 4; $i++)
-                        <div class="swiper-slide">
-                            <img src="{{ asset('genset-website/imgGenset/' . $i . '.jpg') }}"
-                                style="width:100%; height:500px; object-fit:cover;">
-                        </div>
-                    @endfor
-                @endif
+        <!-- tombol kiri -->
+        <div class="hero-nav hero-prev swiper-button-prev"></div>
+        <!-- tombol kanan -->
+        <div class="hero-nav hero-next swiper-button-next"></div>
+                    <!-- pagination -->
+            <div class="swiper-pagination hero-pagination"></div>
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div class="swiper heroSwiper">
+
+                <div class="swiper-wrapper">
+
+                    @php
+                        $heroImages = $homepage->hero_images ?? [];
+                    @endphp
+
+                    @if (!empty($heroImages))
+                        @foreach ($heroImages as $slide)
+                            <div class="swiper-slide">
+                                <img src="{{ Storage::url($slide['image']) }}">
+                            </div>
+                        @endforeach
+                    @else
+                        @for ($i = 1; $i <= 4; $i++)
+                            <div class="swiper-slide">
+                                <img src="{{ asset('genset-website/imgGenset/' . $i . '.jpg') }}">
+                            </div>
+                        @endfor
+                    @endif
+
+                </div>
 
             </div>
 
-        </div>
-        <div class="hero-overlay">
-            <div>
-                <h1>{{ $homepage->hero_title ?? 'Reliable Power Solutions' }}</h1>
-                <p>{{ $homepage->hero_subtitle ?? 'Industrial-grade genset and energy solutions' }}</p>
+            <div class="hero-overlay">
+                <div>
+                    <h1>{{ $homepage->hero_title ?? 'Reliable Power Solutions' }}</h1>
+                    <p>{{ $homepage->hero_subtitle ?? 'Industrial-grade genset and energy solutions' }}</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== SERVICES ===== -->
+    <!-- ===== SERVICES =====
     <div class="section">
         <div class="row g-4 justify-content-center">
 
@@ -54,7 +67,7 @@
     </div>
 
 
-    <!-- ===== VISI & MISI ===== -->
+    
     @if ($visionMission)
         <div class="section visi-misi">
             <div class="row">
@@ -77,7 +90,7 @@
         <p>Visi misi belum di buat</p>
     @endif
 
-    <!-- ===== TRUST ===== -->
+    
     <div class="trust-section" id="trust">
         <div class="row text-center">
             <div class="col-md-4 trust-box">
@@ -94,19 +107,30 @@
             </div>
         </div>
     </div>
+    -->
 
-    </div>
+</div>
 
 
     <!-- ===== SCRIPT ===== -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         new Swiper('.heroSwiper', {
-            loop: true,
-            autoplay: {
-                delay: 4000
-            }
-        });
+        loop: true, // matikan loop
+
+        grabCursor: true,
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true // bullet mengikuti jumlah slide
+        }
+    });
 
         const counters = document.querySelectorAll('.counter');
         let started = false;

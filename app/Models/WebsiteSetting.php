@@ -10,6 +10,7 @@ class WebsiteSetting extends Model
     protected $fillable = [
         'logo',
         'whatsapp_number',
+        'location_name',
         'address',
         'map_zoom',
         'map_embed_url',
