@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\CompanyValueController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,7 +65,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 // GROUP ADMIN (belum pakai auth dulu)
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/login', [AuthController::class,'showLogin'])->name('login');
+    Route::post('/admin/login', [AuthController::class,'login'])->name('login.submit');
+});
+Route::post('/admin/logout', [AuthController::class,'logout'])->name('logout');
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     
 
     Route::get('/index', [DashboardController::class, 'index'])
@@ -111,6 +119,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/genset/spec/{id}', [ProductController::class, 'updateSpec'])
         ->name('genset.updateSpec');
 
+    Route::put('/genset/spec-detail/{id}', [ProductController::class, 'updateSpecDetail'])
+        ->name('genset.updateSpecDetail');
+
     Route::delete('/genset/spec/{id}', [ProductController::class, 'deleteSpec'])
         ->name('genset.deleteSpec');
 
@@ -127,7 +138,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/homepage/services',[HomepageController::class, 'updateServices'])
         ->name('homepage.services.update');
 
+    Route::get('/user-admin', [AdminSettingController::class, 'index'])
+        ->name('settings.user_admin');
 
+    Route::put('/user-admin/update', [AdminSettingController::class, 'update'])
+        ->name('settings.user_admin.update');
 
     Route::get('/requests',[GensetInquiryController::class, 'index'])
         ->name('requests.index');
