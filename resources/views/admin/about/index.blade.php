@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <div class="section-header">
     <h1>About Us</h1>
 </div>
@@ -14,46 +15,50 @@
             </button>
         </div>
 
-        <div class="card-body">
-            <div class="row align-items-center">
+```
+    <div class="card-body">
+        <div class="row align-items-center">
 
-                {{-- GAMBAR --}}
-                <div class="col-md-5 mb-4 mb-md-0">
-                    @if($profile->about_image)
-                        <img
-                            src="{{ asset('storage/'.$profile->about_image) }}"
-                            class="img-fluid rounded"
-                            style="object-fit:cover;max-height:320px;"
-                        >
-                    @else
-                        <div class="text-muted fst-italic">
-                            Belum ada gambar
-                        </div>
-                    @endif
-                </div>
-
-                {{-- KONTEN --}}
-                <div class="col-md-7">
-                    <h2>About Us</h2>
-
-                    @if($profile->description)
-                        {!! $profile->description !!}
-                    @else
-                        <p class="text-muted">Konten belum diisi.</p>
-                    @endif
-                </div>
-
+            {{-- GAMBAR --}}
+            <div class="col-md-5 mb-4 mb-md-0">
+                @if($profile->about_image)
+                    <img
+                        src="{{ asset('storage/'.$profile->about_image) }}"
+                        class="img-fluid rounded"
+                        style="object-fit:cover;max-height:320px;"
+                    >
+                @else
+                    <div class="text-muted fst-italic">
+                        Belum ada gambar
+                    </div>
+                @endif
             </div>
+
+            {{-- KONTEN --}}
+            <div class="col-md-7">
+                <h2>About Us</h2>
+
+                @if($profile->description)
+                    {!! $profile->description !!}
+                @else
+                    <p class="text-muted">Konten belum diisi.</p>
+                @endif
+            </div>
+
         </div>
     </div>
+</div>
+```
+
 </div>
 @endsection
 
 @push('modals')
-{{-- MODAL EDIT --}}
+
 <div class="modal fade" id="editModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <form
+            id="about-form"
             method="POST"
             action="{{ route('admin.about.update', $profile->id) }}"
             enctype="multipart/form-data"
@@ -61,88 +66,84 @@
             @csrf
             @method('PUT')
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Edit About Us</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-
-                    {{-- IMAGE --}}
-                    <div class="form-group">
-                        <label>Gambar About (kiri)</label>
-                        <input type="file" name="about_image" class="form-control-file">
-                        <small class="text-muted">
-                            Landscape • max 2MB • akan mengganti gambar lama
-                        </small>
-                    </div>
-
-                    {{-- CONTENT --}}
-                    <div class="form-group mt-3">
-                        <label>Konten About</label>
-                        <textarea
-                            id="about-editor"
-                            class="form-control"
-                            rows="6"
-                        >{!! $profile->description !!}</textarea>
-
-                        <textarea name="description" hidden></textarea>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Batal
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        Simpan
-                    </button>
-                </div>
+```
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit About Us</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-        </form>
-    </div>
+
+            <div class="modal-body">
+
+                {{-- IMAGE --}}
+                <div class="form-group">
+                    <label>Gambar About (kiri)</label>
+                    <input type="file" name="about_image" class="form-control-file">
+                    <small class="text-muted">
+                        Landscape • max 2MB • akan mengganti gambar lama
+                    </small>
+                </div>
+
+                {{-- CONTENT --}}
+                <div class="form-group mt-3">
+                    <label>Konten About</label>
+
+                    <textarea
+                        id="about-editor"
+                        class="form-control"
+                        rows="6"
+                    >{!! $profile->description !!}</textarea>
+
+                    <textarea name="description" hidden></textarea>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Batal
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+```
+
 </div>
 @endpush
 
-
-
 @push('scripts')
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
 <script>
-let editor;
+let editor = null;
 
-$('#btn-edit').on('click', () => {
+$('#btn-edit').on('click', function () {
     $('#editModal').modal('show');
 });
 
-ClassicEditor
-    .create(document.querySelector('#about-editor'))
-    .then(e => editor = e);
-
-$('form').on('submit', function () {
-    $('textarea[name="description"]').val(editor.getData());
-});
-
-$('.toggle-password').click(function () {
-    let target = $(this).data('target');
-    let input = $('#' + target);
-    let icon = $(this).find('i');
-
-    if (input.attr('type') === 'password') {
-        input.attr('type', 'text');
-        icon.removeClass('fa-eye').addClass('fa-eye-slash');
-    } else {
-        input.attr('type', 'password');
-        icon.removeClass('fa-eye-slash').addClass('fa-eye');
+$('#editModal').on('shown.bs.modal', function () {
+    if (!editor) {
+        ClassicEditor
+            .create(document.querySelector('#about-editor'))
+            .then(e => {
+                editor = e;
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 });
-</script>
+
+$('#about-form').on('submit', function () {
+    if (editor) {
+        $('textarea[name="description"]').val(editor.getData());
+    }
+});
 
 @if(session('success'))
-<script>
 Swal.fire({
     icon: 'success',
     title: 'Berhasil',
@@ -150,26 +151,23 @@ Swal.fire({
     timer: 1800,
     showConfirmButton: false
 });
-</script>
 @endif
 
 @if(session('error'))
-<script>
 Swal.fire({
     icon: 'error',
     title: 'Gagal',
     text: '{{ session('error') }}'
 });
-</script>
 @endif
 
 @if($errors->any())
-<script>
 Swal.fire({
     icon: 'error',
     title: 'Validasi Gagal',
     html: `{!! implode('<br>', $errors->all()) !!}`
 });
-</script>
 @endif
+</script>
+
 @endpush
