@@ -1,8 +1,8 @@
 @extends('layouts.userLayouts')
 
 @section('content')
-    <div class="container mt-5 mb-5">
-        <h2 class="mb-4">Service</h2>
+    <div class="page-section">
+        <h2 class="page-title-elegant">Service</h2>
 
         <div class="row">
 

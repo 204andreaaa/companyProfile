@@ -20,6 +20,7 @@
 
 @section('content')
     <div class="page-section">
+        <h2 class="page-title-elegant">About Us</h2>
         <div class="row align-items-center">
 
             {{-- IMAGE --}}
@@ -35,8 +36,6 @@
 
             {{-- CONTENT --}}
             <div class="col-md-7">
-                <h2>About Us</h2>
-
                 @if ($profile)
                     {!! $profile->description !!}
                 @else

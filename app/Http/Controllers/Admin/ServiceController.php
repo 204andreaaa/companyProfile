@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Service;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -50,12 +51,11 @@ class ServiceController extends Controller
                 Storage::delete('public/' . $service->image);
             }
 
-            $file = $request->file('image');
-            $filename = 'services/' . time() . '_' . $file->getClientOriginalName();
-
-            $file->storeAs('public', $filename);
-
-            $data['image'] = $filename;
+            $data['image'] = OptimizedImageStorage::store($request->file('image'), 'services', [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'quality' => 84,
+            ]);
         }
 
         $service->update($data);

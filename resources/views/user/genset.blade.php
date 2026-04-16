@@ -6,7 +6,7 @@
 <div class="page-section">
 
     <div class="genset-title">
-        <h1>Genset</h1>
+        <h1 class="page-title-elegant">Genset</h1>
     </div>
 
     <div class="genset-grid">

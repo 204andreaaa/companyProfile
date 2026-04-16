@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\HomepageService;
 use App\Models\HomepageSetting;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,7 +52,11 @@ class HomepageController extends Controller
             foreach ($request->file('hero_images') as $file) {
                 $images[] = [
                     'id'     => uniqid(),
-                    'image'  => $file->store('hero', 'public'),
+                    'image'  => OptimizedImageStorage::store($file, 'hero', [
+                        'max_width' => 1920,
+                        'max_height' => 1080,
+                        'quality' => 82,
+                    ]),
                     'active' => true,
                 ];
             }

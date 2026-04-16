@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GensetInquiry;
 use App\Models\WebsiteSetting;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,11 +55,11 @@ class WebsiteSettingController extends Controller
                 Storage::delete('public/'.$settings->logo);
             }
 
-            $file = $request->file('logo');
-            $filename = 'settings/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-
-            $data['logo'] = $filename;
+            $data['logo'] = OptimizedImageStorage::store($request->file('logo'), 'settings', [
+                'max_width' => 1000,
+                'max_height' => 1000,
+                'quality' => 86,
+            ]);
         }
 
         $settings->update($data);

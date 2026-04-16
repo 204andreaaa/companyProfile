@@ -155,7 +155,6 @@ thead th {
 </thead>
 
 <tbody>
-@foreach($brand->specs as $spec)
 <tr>
 
     <!-- IMAGE -->
@@ -192,7 +191,6 @@ thead th {
     <td>{{ $spec->kg_silent }}</td>
 
 </tr>
-@endforeach
 </tbody>
 
 </table>

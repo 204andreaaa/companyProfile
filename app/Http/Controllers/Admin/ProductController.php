@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Brand;
 use App\Models\GensetSpec;
 use App\Models\GensetSpecModelDetail;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -77,10 +78,11 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = 'gensets/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public',$filename);
-            $data['image'] = $filename;
+            $data['image'] = OptimizedImageStorage::store($request->file('image'), 'gensets', [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'quality' => 84,
+            ]);
         }
 
         GensetSpec::create($data);
@@ -110,11 +112,11 @@ class ProductController extends Controller
                 Storage::delete('public/'.$spec->image);
             }
 
-            $file = $request->file('image');
-            $filename = 'gensets/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public',$filename);
-
-            $data['image'] = $filename;
+            $data['image'] = OptimizedImageStorage::store($request->file('image'), 'gensets', [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'quality' => 84,
+            ]);
         }
 
         $spec->update($data);
@@ -152,11 +154,11 @@ class ProductController extends Controller
                 Storage::delete('public/'.$brand->logo);
             }
 
-            $file = $request->file('logo');
-            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-
-            $data['logo'] = $filename;
+            $data['logo'] = OptimizedImageStorage::store($request->file('logo'), 'brands', [
+                'max_width' => 1000,
+                'max_height' => 1000,
+                'quality' => 86,
+            ]);
         }
 
         $brand->update($data);
@@ -179,10 +181,11 @@ class ProductController extends Controller
         ];
 
         if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $filename = 'brands/'.time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public',$filename);
-            $data['logo'] = $filename;
+            $data['logo'] = OptimizedImageStorage::store($request->file('logo'), 'brands', [
+                'max_width' => 1000,
+                'max_height' => 1000,
+                'quality' => 86,
+            ]);
         }
 
         Brand::create($data);

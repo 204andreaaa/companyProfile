@@ -27,7 +27,7 @@
 </style>
 @section('content')
     <div class="page-section">
-        <h4 class="mb-4">Berita & Artikel</h4>
+        <h2 class="page-title-elegant">Berita & Artikel</h2>
 
         <div class="row g-4">
 

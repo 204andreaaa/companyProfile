@@ -115,6 +115,13 @@
             background: #b02a37;
             color: #fff;
         }
+
+        .pdf-download-btn--row {
+            display: inline-flex;
+            justify-content: center;
+            min-width: 44px;
+            padding: 8px 10px;
+        }
     /* ================= Breadcrumb ================= */
 
     .breadcrumb-custom{
@@ -276,11 +283,6 @@
                 {{ $brand->name }} Series Specifications
             </div>
 
-            <a href="{{ route('genset.download.pdf', $brand->slug) }}" class="pdf-download-btn">
-                <i class="fas fa-file-pdf"></i>
-                Download PDF
-            </a>
-
         </div>
 
         <div class="table-responsive">
@@ -307,6 +309,7 @@
 
                         <th colspan="4">OPEN TYPE</th>
                         <th colspan="4">SILENT TYPE</th>
+                        <th rowspan="3" class="align-top">PDF</th>
                     </tr>
 
                     <!-- ROW 2 -->
@@ -392,6 +395,14 @@
                             <td data-label="Silent H">{{ $spec->h_silent }}</td>
 
                             <td data-label="Silent Weight">{{ $spec->kg_silent }}</td>
+
+                            <td data-label="PDF">
+                                <a href="{{ route('genset.download.pdf', ['brand' => $brand->slug, 'spec' => $spec->id]) }}"
+                                    class="pdf-download-btn pdf-download-btn--row"
+                                    title="Download PDF {{ $spec->model }}">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                            </td>
 
                         </tr>
                     @endforeach

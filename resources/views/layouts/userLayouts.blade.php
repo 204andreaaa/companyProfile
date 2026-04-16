@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>About Us - Bach Multi Global</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Swiper CSS (WAJIB) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -22,6 +25,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+    :root{
+        --site-heading:#1f3550;
+        --site-accent:#315d8f;
+        --site-accent-soft:#77b4f2;
+        --site-text:#46576b;
+        --site-border:rgba(49,93,143,.10);
+        --site-shadow:0 16px 34px rgba(13,42,90,.07);
+    }
+
+    body{
+        font-family:'Plus Jakarta Sans', sans-serif;
+        color:var(--site-text);
+    }
+
     /* ===== HEADER ===== */
 
     .logo-header{
@@ -118,6 +135,116 @@
         font-size:12px;
     }
 
+    }
+
+    .page-section{
+        box-shadow: var(--site-shadow);
+        border: 1px solid var(--site-border);
+    }
+
+    .page-section h1,
+    .page-section h2,
+    .page-section h3,
+    .page-section .genset-title h1,
+    .page-section .contact-title{
+        font-family:'Plus Jakarta Sans', sans-serif;
+        color:var(--site-heading);
+    }
+
+    .page-section h1,
+    .page-section h2{
+        font-weight:800;
+        letter-spacing:-.02em;
+    }
+
+    .page-section p,
+    .page-section li,
+    .page-section .text-muted,
+    .page-section .blog-desc{
+        color:var(--site-text);
+    }
+
+    .brands .fw-bold{
+        font-family:'Plus Jakarta Sans', sans-serif;
+        color:var(--site-heading);
+        font-weight:800;
+        letter-spacing:-.02em;
+    }
+
+    .page-title-elegant{
+        font-family:'Plus Jakarta Sans', sans-serif;
+        text-align:center;
+        font-size:34px;
+        font-weight:800;
+        letter-spacing:-.02em;
+        color:var(--site-heading);
+        margin:0 auto 30px;
+        line-height:1.15;
+    }
+
+    .page-title-elegant::after{
+        content:"";
+        display:block;
+        width:74px;
+        height:4px;
+        margin:12px auto 0;
+        border-radius:999px;
+        background:linear-gradient(90deg, var(--site-accent-soft), var(--site-accent));
+        opacity:.95;
+    }
+
+    .page-subtitle-elegant{
+        font-family:'Plus Jakarta Sans', sans-serif;
+        text-align:center;
+        font-size:26px;
+        font-weight:800;
+        letter-spacing:-.02em;
+        color:var(--site-heading);
+        margin:0 auto 24px;
+    }
+
+    .page-subtitle-elegant::after{
+        content:"";
+        display:block;
+        width:64px;
+        height:4px;
+        margin:10px auto 0;
+        border-radius:999px;
+        background:linear-gradient(90deg, var(--site-accent-soft), var(--site-accent));
+    }
+
+    .brand-footer-item{
+        transition: transform .28s ease, filter .28s ease;
+        filter: drop-shadow(0 10px 18px rgba(13,42,90,.08));
+    }
+
+    .brand-footer-item:hover{
+        transform: translateY(-4px);
+        filter: drop-shadow(0 14px 24px rgba(13,42,90,.12));
+    }
+
+    .reveal-on-scroll{
+        opacity:0;
+        transform: translateY(26px);
+        transition: opacity .7s ease, transform .7s cubic-bezier(.2,.65,.2,1);
+        will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.is-visible{
+        opacity:1;
+        transform: translateY(0);
+    }
+
+    .reveal-on-scroll[data-reveal-delay="1"]{ transition-delay: .08s; }
+    .reveal-on-scroll[data-reveal-delay="2"]{ transition-delay: .16s; }
+    .reveal-on-scroll[data-reveal-delay="3"]{ transition-delay: .24s; }
+
+    @media (prefers-reduced-motion: reduce){
+        .reveal-on-scroll{
+            opacity:1;
+            transform:none;
+            transition:none;
+        }
     }
     </style>
 </head>
@@ -308,5 +435,46 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            (() => {
+                const selectors = [
+                    '.page-section',
+                    '.hero-section',
+                    '.service-home-section .card',
+                    '.blog-card',
+                    '.genset-item',
+                    '.brand-footer-item',
+                    '.detail-hero',
+                    '.spec-box'
+                ];
+
+                const nodes = selectors.flatMap(selector => Array.from(document.querySelectorAll(selector)));
+                nodes.forEach((node, index) => {
+                    if (!node.classList.contains('reveal-on-scroll')) {
+                        node.classList.add('reveal-on-scroll');
+                        node.dataset.revealDelay = String(index % 4);
+                    }
+                });
+
+                if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    nodes.forEach(node => node.classList.add('is-visible'));
+                    return;
+                }
+
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.14,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                nodes.forEach(node => observer.observe(node));
+            })();
+        </script>
 
 </body>

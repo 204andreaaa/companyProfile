@@ -40,8 +40,8 @@ Route::get('/service', [HomeController::class, 'service'])
 Route::get('/service/{slug}', [HomeController::class, 'serviceDetail'])
     ->name('service.detail');
 
-Route::get('/genset/{brand}/download-pdf',[HomeController::class, 'downloadGensetPdf']
-)->name('genset.download.pdf');
+Route::get('/genset/{brand}/download-pdf/{spec}', [HomeController::class, 'downloadGensetPdf'])
+    ->name('genset.download.pdf');
 
 Route::get('/genset', [HomeController::class, 'genset'])
     ->name('user.genset');

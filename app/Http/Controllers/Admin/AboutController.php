@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompanyProfile;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,9 +34,15 @@ class AboutController extends Controller
                 Storage::disk('public')->delete($profile->about_image);
             }
 
-            $data['about_image'] = $request
-                ->file('about_image')
-                ->store('about', 'public');
+            $data['about_image'] = OptimizedImageStorage::store(
+                $request->file('about_image'),
+                'about',
+                [
+                    'max_width' => 1600,
+                    'max_height' => 1200,
+                    'quality' => 84,
+                ]
+            );
         }
 
         $profile->update($data);

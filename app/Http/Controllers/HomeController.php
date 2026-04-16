@@ -28,9 +28,19 @@ class HomeController extends Controller
     {
         $homepage = HomepageSetting::orderBy('id')->first();
         $services = HomepageService::where('is_active', true)
-        ->orderBy('order')
-        ->get();
+            ->orderBy('order')
+            ->get();
         $visionMission = VisionMission::latest()->first();
+        $profile = CompanyProfile::first();
+        $brands = Brand::where('is_active', true)->get();
+        $serviceCatalog = Service::where('is_active', true)
+            ->orderBy('id')
+            ->get();
+        $posts = Post::where('status', 'published')
+            ->latest()
+            ->take(3)
+            ->get();
+        $settings = WebsiteSetting::first();
 
         // HANYA gallery yang is_active = 1
         $galleries = Gallery::where('is_active', true)
@@ -42,7 +52,11 @@ class HomeController extends Controller
             'services'      => $services,
             'visionMission' => $visionMission,
             'galleries'     => $galleries,
-
+            'profile'       => $profile,
+            'brands'        => $brands,
+            'serviceCatalog'=> $serviceCatalog,
+            'posts'         => $posts,
+            'settings'      => $settings,
         ]);
     }
 
@@ -148,16 +162,23 @@ class HomeController extends Controller
         return view('user.detail-model', compact('brand', 'spec'));
     }
 
-    public function downloadGensetPdf($brandSlug)
+    public function downloadGensetPdf($brandSlug, $specId)
     {
         $brand = Brand::where('slug', $brandSlug)
-            ->with('specs')
             ->firstOrFail();
 
-        $pdf = Pdf::loadView('exports.genset-pdf', compact('brand'))
+        $spec = GensetSpec::where('brand_id', $brand->id)
+            ->findOrFail($specId);
+
+        $pdf = Pdf::loadView('exports.genset-pdf', compact('brand', 'spec'))
             ->setPaper('a4', 'landscape');
 
-        return $pdf->download($brand->name.'_catalog.pdf');
+        $fileName = str($brand->name . '_' . $spec->model . '_catalog')
+            ->lower()
+            ->replace(' ', '_')
+            ->append('.pdf');
+
+        return $pdf->download((string) $fileName);
     }
         // Penawaran genset
 

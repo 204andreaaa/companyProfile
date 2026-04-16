@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -51,7 +52,11 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('posts', 'public');
+            $data['image_path'] = OptimizedImageStorage::store($request->file('image'), 'posts', [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'quality' => 82,
+            ]);
         }
 
         $post = Post::create($data);
@@ -84,7 +89,11 @@ class PostController extends Controller
             if ($post->image_path) {
                 Storage::disk('public')->delete($post->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('posts', 'public');
+            $data['image_path'] = OptimizedImageStorage::store($request->file('image'), 'posts', [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'quality' => 82,
+            ]);
         }
 
         $post->update($data);

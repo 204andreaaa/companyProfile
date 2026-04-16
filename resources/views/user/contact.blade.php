@@ -6,7 +6,7 @@
 
             <!-- CONTACT FORM -->
             <div class="col-md-7">
-                <div class="contact-title">CONTACT US</div>
+                <div class="page-subtitle-elegant">Contact Us</div>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -35,7 +35,7 @@
 
             <!-- MAP -->
             <div class="col-md-5">
-                <div class="contact-title">FIND US</div>
+                <div class="page-subtitle-elegant">Find Us</div>
                     <div class="map-box">
                         @if($settings?->map_embed_url)
                             <iframe

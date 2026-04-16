@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompanyValue;
+use App\Support\OptimizedImageStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +41,11 @@ class CompanyValueController extends Controller
         $data = $this->validateData($request);
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('company_values', 'public');
+            $data['image_path'] = OptimizedImageStorage::store($request->file('image'), 'company_values', [
+                'max_width' => 1200,
+                'max_height' => 1200,
+                'quality' => 82,
+            ]);
         }
 
         $value = CompanyValue::create($data);
@@ -59,7 +64,11 @@ class CompanyValueController extends Controller
             if ($value->image_path) {
                 Storage::disk('public')->delete($value->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('company_values', 'public');
+            $data['image_path'] = OptimizedImageStorage::store($request->file('image'), 'company_values', [
+                'max_width' => 1200,
+                'max_height' => 1200,
+                'quality' => 82,
+            ]);
         }
 
         $value->update($data);
@@ -106,4 +115,3 @@ class CompanyValueController extends Controller
         ];
     }
 }
-

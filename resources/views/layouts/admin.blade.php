@@ -288,6 +288,153 @@
   <!-- Template JS File -->
   <script src="{{asset('admin/dist/assets/js/scripts.js')}}"></script>
   <script src="{{asset('admin/dist/assets/js/custom.js')}}"></script>
+  <script>
+    (() => {
+      const pendingInputs = new WeakMap();
+
+      function getSubmitButtons(form) {
+        return Array.from(form.querySelectorAll('button[type="submit"], input[type="submit"]'));
+      }
+
+      function setFormBusy(form, busy) {
+        getSubmitButtons(form).forEach((button) => {
+          button.disabled = busy;
+          if (busy && !button.dataset.originalLabel) {
+            button.dataset.originalLabel = button.tagName === 'INPUT' ? button.value : button.innerHTML;
+            if (button.tagName === 'INPUT') {
+              button.value = 'Memproses gambar...';
+            } else {
+              button.innerHTML = 'Memproses gambar...';
+            }
+          } else if (!busy && button.dataset.originalLabel) {
+            if (button.tagName === 'INPUT') {
+              button.value = button.dataset.originalLabel;
+            } else {
+              button.innerHTML = button.dataset.originalLabel;
+            }
+            delete button.dataset.originalLabel;
+          }
+        });
+      }
+
+      function canOptimize(file) {
+        return file && file.type.startsWith('image/') && !['image/svg+xml', 'image/gif'].includes(file.type);
+      }
+
+      function fileNameWithExtension(fileName, extension) {
+        const cleanExtension = extension.replace(/^\./, '');
+        const baseName = fileName.replace(/\.[^/.]+$/, '');
+        return `${baseName}.${cleanExtension}`;
+      }
+
+      function canvasToBlob(canvas, type, quality) {
+        return new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+      }
+
+      function loadBitmap(file) {
+        if ('createImageBitmap' in window) {
+          return createImageBitmap(file);
+        }
+
+        return new Promise((resolve, reject) => {
+          const image = new Image();
+          const objectUrl = URL.createObjectURL(file);
+
+          image.onload = () => {
+            URL.revokeObjectURL(objectUrl);
+            resolve(image);
+          };
+
+          image.onerror = () => {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Gagal membaca gambar.'));
+          };
+
+          image.src = objectUrl;
+        });
+      }
+
+      async function optimizeFile(file, input) {
+        if (!canOptimize(file)) {
+          return file;
+        }
+
+        const bitmap = await loadBitmap(file);
+        const maxWidth = Number(input.dataset.maxWidth || 1920);
+        const maxHeight = Number(input.dataset.maxHeight || 1920);
+        const ratio = Math.min(maxWidth / bitmap.width, maxHeight / bitmap.height, 1);
+        const width = Math.max(1, Math.round(bitmap.width * ratio));
+        const height = Math.max(1, Math.round(bitmap.height * ratio));
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        ctx.drawImage(bitmap, 0, 0, width, height);
+        if (typeof bitmap.close === 'function') {
+          bitmap.close();
+        }
+
+        const outputType = file.type === 'image/png' ? 'image/png' : 'image/webp';
+        const quality = Number(input.dataset.quality || 0.82);
+        const blob = await canvasToBlob(canvas, outputType, quality);
+
+        if (!blob || blob.size >= file.size) {
+          return file;
+        }
+
+        const extension = outputType === 'image/png' ? 'png' : 'webp';
+
+        return new File([blob], fileNameWithExtension(file.name, extension), {
+          type: outputType,
+          lastModified: Date.now(),
+        });
+      }
+
+      async function optimizeInput(input) {
+        const files = Array.from(input.files || []);
+
+        if (!files.length) {
+          return;
+        }
+
+        const form = input.form;
+        if (form) {
+          setFormBusy(form, true);
+        }
+
+        try {
+          const optimizedFiles = await Promise.all(files.map((file) => optimizeFile(file, input)));
+          const dataTransfer = new DataTransfer();
+
+          optimizedFiles.forEach((file) => dataTransfer.items.add(file));
+          input.files = dataTransfer.files;
+        } finally {
+          pendingInputs.delete(input);
+          if (form) {
+            setFormBusy(form, false);
+          }
+        }
+      }
+
+      document.addEventListener('change', (event) => {
+        const input = event.target;
+
+        if (!(input instanceof HTMLInputElement) || input.type !== 'file') {
+          return;
+        }
+
+        const hasImageFiles = Array.from(input.files || []).some(canOptimize);
+        if (!hasImageFiles) {
+          return;
+        }
+
+        const pending = optimizeInput(input);
+        pendingInputs.set(input, pending);
+      });
+    })();
+  </script>
   
   @stack('modals')
   @stack('scripts')
