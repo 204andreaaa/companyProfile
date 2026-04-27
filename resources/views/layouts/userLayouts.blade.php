@@ -246,6 +246,20 @@
             transition:none;
         }
     }
+
+    /* ===== STICKY NAV ===== */
+    .nav-wrapper {
+        transition: all 0.3s ease;
+        z-index: 1030;
+    }
+
+    .nav-wrapper.is-sticky {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(135deg, #5aa1e3, #2f6fb1);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+        border-radius: 40px 40px 0 0;
+    }
     </style>
 </head>
 
@@ -475,6 +489,23 @@
 
                 nodes.forEach(node => observer.observe(node));
             })();
+
+            // Sticky Header Logic
+            const navbar = document.querySelector('.nav-wrapper');
+            const placeholder = document.querySelector('.navbar-placeholder');
+            if (navbar) {
+                const navOffset = navbar.offsetTop;
+                const handleScroll = () => {
+                    if (window.pageYOffset > navOffset) {
+                        navbar.classList.add('is-sticky');
+                    } else {
+                        navbar.classList.remove('is-sticky');
+                    }
+                };
+                window.addEventListener('scroll', handleScroll);
+                // Initial check
+                handleScroll();
+            }
         </script>
 
 </body>
