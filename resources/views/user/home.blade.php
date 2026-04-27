@@ -6,25 +6,39 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 210px;
+            /* Ditambah lagi karena headernya makin tinggi */
+        }
+
+        @media (max-width: 767px) {
+            html {
+                scroll-padding-top: 70px;
+            }
         }
 
         .home-anchor-section {
-            scroll-margin-top: 24px;
+            padding-top: 60px;
+            /* Konsisten gap */
+            margin-top: -20px;
         }
 
         .home-sections-wrap {
             background: #fff;
-            border-radius: 0 0 18px 18px;
-            padding: 35px;
-            margin: 0 0 40px;
+            border-radius: 18px;
+            padding: 45px;
+            margin: 20px 0;
+            /* Makin rapet */
             box-shadow: 0 14px 34px rgba(13, 42, 90, 0.06);
         }
 
         .home-hero-wrap {
             background: #fff;
-            border-radius: 18px 18px 0 0;
-            padding: 28px;
-            margin: 40px 0 0;
+            border-radius: 18px;
+            padding: 5px 35px 35px; /* Pangkas padding atas biar rapat */
+            margin: 0px 0 0; /* Pepetin total ke atas */
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
             box-shadow: 0 14px 34px rgba(13, 42, 90, 0.06);
         }
 
@@ -38,6 +52,8 @@
             margin-top: 0;
             border-radius: 24px;
             overflow: hidden;
+            height: 600px;
+            /* Gedein biar full */
             background: #dfe5ec;
             box-shadow: 0 18px 38px rgba(13, 42, 90, 0.10);
         }
@@ -119,9 +135,9 @@
             }
         }
 
-        .home-anchor-section + .home-anchor-section {
-            margin-top: 34px;
-            padding-top: 34px;
+        .home-anchor-section+.home-anchor-section {
+            margin-top: 80px;
+            padding-top: 80px;
             border-top: 1px solid #eef2f7;
         }
 
@@ -298,30 +314,6 @@
             background: linear-gradient(90deg, #77b4f2, #2f6fb1);
         }
 
-        .home-dot-nav {
-            position: fixed;
-            top: 50%;
-            right: 22px;
-            transform: translateY(-50%);
-            z-index: 40;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .home-dot-nav__link {
-            width: 12px;
-            height: 12px;
-            border-radius: 999px;
-            background: rgba(13, 32, 56, 0.18);
-            border: 1px solid rgba(13, 110, 253, 0.3);
-            transition: transform .2s ease, background-color .2s ease;
-        }
-
-        .home-dot-nav__link.is-active {
-            transform: scale(1.25);
-            background: #315d8f;
-        }
 
         .genset-item {
             border-radius: 18px;
@@ -388,14 +380,6 @@
         }
     </style>
 
-    <div class="home-dot-nav">
-        <a href="#home" class="home-dot-nav__link is-active" data-home-dot></a>
-        <a href="#about" class="home-dot-nav__link" data-home-dot></a>
-        <a href="#genset" class="home-dot-nav__link" data-home-dot></a>
-        <a href="#service" class="home-dot-nav__link" data-home-dot></a>
-        <a href="#blog" class="home-dot-nav__link" data-home-dot></a>
-        <a href="#contact" class="home-dot-nav__link" data-home-dot></a>
-    </div>
 
     <section id="home" class="home-anchor-section">
         <div class="home-hero-wrap">
@@ -439,7 +423,7 @@
     </section>
 
     <div class="home-sections-wrap">
-    <section id="about" class="home-anchor-section">
+        <section id="about" class="home-anchor-section">
             <div class="row align-items-center">
                 <div class="col-md-5 mb-4 mb-md-0 text-center">
                     <div class="about-image-wrap">
@@ -461,15 +445,17 @@
                     @endif
                 </div>
             </div>
-    </section>
+        </section>
 
-    <section id="genset" class="home-anchor-section">
+        <section id="genset" class="home-anchor-section">
             <h2 class="home-section-title">Genset</h2>
 
             <div class="genset-grid">
                 @foreach ($brands as $brand)
                     @php
-                        $logo = $brand->logo ? asset('storage/' . $brand->logo) : asset('genset-website/img/brand/' . $brand->slug . '.png');
+                        $logo = $brand->logo
+                            ? asset('storage/' . $brand->logo)
+                            : asset('genset-website/img/brand/' . $brand->slug . '.png');
                     @endphp
 
                     <a href="{{ route('user.genset.detail', $brand->slug) }}" class="genset-item">
@@ -480,37 +466,39 @@
                     </a>
                 @endforeach
             </div>
-    </section>
+        </section>
 
-    <section id="service" class="home-anchor-section">
-        <div class="service-home-section">
-            <h2 class="home-section-title">Service</h2>
+        <section id="service" class="home-anchor-section">
+            <div class="service-home-section">
+                <h2 class="home-section-title">Service</h2>
 
-            <div class="row">
-                @foreach ($serviceCatalog as $service)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm border-0">
-                            <img src="{{ $service->image_url }}" class="card-img-top" style="height:250px; object-fit:cover;">
+                <div class="row">
+                    @foreach ($serviceCatalog as $service)
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm border-0">
+                                <img src="{{ $service->image_url }}" class="card-img-top"
+                                    style="height:250px; object-fit:cover;">
 
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{{ $service->name }}</h5>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">{{ $service->name }}</h5>
 
-                                <p class="text-muted small">
-                                    {{ $service->short_description }}
-                                </p>
+                                    <p class="text-muted small">
+                                        {{ $service->short_description }}
+                                    </p>
 
-                                <a href="{{ route('service.detail', $service->slug) }}" class="btn btn-dark w-100 mt-3">
-                                    View Detail
-                                </a>
+                                    <a href="{{ route('service.detail', $service->slug) }}"
+                                        class="btn btn-dark w-100 mt-3">
+                                        View Detail
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="blog" class="home-anchor-section">
+        <section id="blog" class="home-anchor-section">
             <h2 class="home-section-title">Berita & Artikel</h2>
 
             <div class="row g-4">
@@ -538,9 +526,9 @@
                     <p>Belum ada artikel.</p>
                 @endforelse
             </div>
-    </section>
+        </section>
 
-    <section id="contact" class="home-anchor-section">
+        <section id="contact" class="home-anchor-section">
             <div class="row g-4">
                 <div class="col-md-7">
                     <div class="home-contact-title">Contact Us</div>
@@ -575,7 +563,8 @@
                     <div class="home-contact-title">Find Us</div>
                     <div class="map-box">
                         @if ($settings?->map_embed_url)
-                            <iframe src="{{ $settings->map_embed_url }}" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+                            <iframe src="{{ $settings->map_embed_url }}" width="100%" height="100%" style="border:0;"
+                                loading="lazy"></iframe>
                         @else
                             <div class="text-muted">Map not configured.</div>
                         @endif
@@ -592,13 +581,17 @@
                     </div>
                 </div>
             </div>
-    </section>
+        </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         new Swiper('.heroSwiper', {
             loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
             grabCursor: true,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -611,30 +604,41 @@
             }
         });
 
-        const dotLinks = document.querySelectorAll('[data-home-dot]');
-        const observedSections = ['home', 'about', 'genset', 'service', 'blog', 'contact']
+        const navLinks = document.querySelectorAll('[data-nav-link]');
+        const sections = ['home', 'about', 'genset', 'service', 'blog', 'contact']
             .map(id => document.getElementById(id))
             .filter(Boolean);
 
-        const activateDot = (sectionId) => {
-            dotLinks.forEach(link => {
-                const targetId = link.getAttribute('href').replace('#', '');
-                link.classList.toggle('is-active', targetId === sectionId);
+        const activateNav = (sectionId) => {
+            navLinks.forEach(link => {
+                const targetId = link.getAttribute('data-nav-link');
+                link.classList.toggle('active', targetId === sectionId);
             });
         };
 
-        if ('IntersectionObserver' in window && dotLinks.length) {
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        activateDot(entry.target.id);
-                    }
-                });
-            }, {
-                threshold: 0.4
+        const handleScrollSpy = () => {
+            // Fix buat Home pas di paling atas
+            if (window.scrollY < 120) {
+                activateNav('home');
+                return;
+            }
+
+            let currentSection = "";
+            const offset = 250; // Jarak aman sesuai tinggi sticky header lu
+
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - offset) {
+                    currentSection = section.getAttribute("id");
+                }
             });
 
-            observedSections.forEach(section => observer.observe(section));
-        }
+            if (currentSection) {
+                activateNav(currentSection);
+            }
+        };
+
+        window.addEventListener('scroll', handleScrollSpy);
+        handleScrollSpy(); // Cek sekali pas load
     </script>
 @endsection
