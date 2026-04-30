@@ -228,6 +228,26 @@
             filter: drop-shadow(0 14px 24px rgba(13, 42, 90, .12));
         }
 
+        .brands {
+            margin-top: 15px;
+            padding: 10px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-footer-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .brand-footer-item img {
+            max-height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(26px);
@@ -435,26 +455,6 @@
         <!-- ===== BRANDS ===== -->
         @yield('footer')
 
-        @if (!View::hasSection('footer'))
-            <div class="brands text-center mt-5">
-                <div class="fw-bold mb-4">Powered by</div>
-
-                <div class="brand-footer-wrapper">
-                    @foreach ($footerBrands as $brand)
-                        @php
-                            $logo = $brand->logo
-                                ? asset('storage/' . $brand->logo)
-                                : asset('genset-website/img/brand/' . $brand->slug . '.png');
-                        @endphp
-
-                        <a href="{{ route('user.genset.detail', $brand->slug) }}" class="brand-footer-item">
-                            <img src="{{ $logo }}" alt="{{ $brand->name }}">
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        @endif
-
 
         <!-- ===== WHATSAPP FLOAT ===== -->
         @php
@@ -479,7 +479,6 @@
                     '.service-home-section .card',
                     '.blog-card',
                     '.genset-item',
-                    '.brand-footer-item',
                     '.detail-hero',
                     '.spec-box'
                 ];
