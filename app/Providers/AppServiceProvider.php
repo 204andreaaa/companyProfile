@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->composer('layouts.userLayouts', function ($view) {
+        view()->composer(['layouts.userLayouts', 'user.*'], function ($view) {
 
             $footerBrands = Brand::where('is_active', 1)->get();
             $settings = WebsiteSetting::first();

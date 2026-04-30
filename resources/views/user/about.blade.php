@@ -44,5 +44,6 @@
             </div>
 
         </div>
+        @include('partials.footer-brands')
     </div>
 @endsection

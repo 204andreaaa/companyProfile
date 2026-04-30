@@ -1,9 +1,9 @@
 @extends('layouts.userLayouts')
 
 @section('content')
-    <div class="container mt-5 mb-5">
+    <div class="page-section">
 
-        <h2 class="mb-4">
+        <h2 class="page-title-elegant">
             {{ $service->name }}
         </h2>
 
@@ -29,6 +29,7 @@
             </div>
 
         </div>
+        @include('partials.footer-brands')
 
     </div>
 @endsection
