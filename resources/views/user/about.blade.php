@@ -39,7 +39,7 @@
                 @if ($profile)
                     {!! $profile->description !!}
                 @else
-                    <p>Konten belum tersedia.</p>
+                    <p>Content not available.</p>
                 @endif
             </div>
 

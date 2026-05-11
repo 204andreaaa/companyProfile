@@ -1,68 +1,70 @@
 @extends('layouts.admin')
 
 @section('content')
-<style>
-/* Fix mobile table homepage */
-#editHomepage .modal-dialog{
-    max-width:700px;
-}
+    <style>
+        /* Fix mobile table homepage */
+        #editHomepage .modal-dialog {
+            max-width: 700px;
+        }
 
-#editHomepage .modal-body{
-    min-height:350px;
-}
-@media (max-width: 768px) {
+        #editHomepage .modal-body {
+            min-height: 350px;
+        }
 
-    .homepage-table table {
-        font-size: 14px;
-    }
+        @media (max-width: 768px) {
 
-    .homepage-table th {
-        width: 45%;
-        white-space: normal !important;
-    }
+            .homepage-table table {
+                font-size: 14px;
+            }
 
-    .homepage-table td {
-        width: 55%;
-        word-break: break-word;
-    }
+            .homepage-table th {
+                width: 45%;
+                white-space: normal !important;
+            }
 
-}
-</style>
-<div class="section-header">
-    <h1>Homepage</h1>
-    <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="#">Homepage</a></div>
-    </div>
-</div>
+            .homepage-table td {
+                width: 55%;
+                word-break: break-word;
+            }
 
-<div class="section-body">
-
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert">
-                <span>&times;</span>
-            </button>
+        }
+    </style>
+    <div class="section-header">
+        <h1>Homepage</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a href="#">Homepage</a></div>
         </div>
-    @endif
+    </div>
 
-    <div class="row">
-        <div class="col-12">
+    <div class="section-body">
 
-            {{-- ================== HOMEPAGE DATA ================== --}}
-            <div class="card mb-4">
-                <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
-                    <h4 class="mb-2 mb-md-0">Pengaturan Homepage</h4>
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editHomepage">
-                        Edit
-                    </button>
-                </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+            </div>
+        @endif
 
-                <div class="card-body p-0">
-                    @if ($homepage)
-                        <div class="table-responsive homepage-table">
-                            <table class="table table-striped table-bordered mb-0">
-                                <tbody>
+        <div class="row">
+            <div class="col-12">
+
+                {{-- ================== HOMEPAGE DATA ================== --}}
+                <div class="card mb-4">
+                    <div
+                        class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                        <h4 class="mb-2 mb-md-0">Pengaturan Homepage</h4>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editHomepage">
+                            Edit
+                        </button>
+                    </div>
+
+                    <div class="card-body p-0">
+                        @if ($homepage)
+                            <div class="table-responsive homepage-table">
+                                <table class="table table-striped table-bordered mb-0">
+                                    <tbody>
                                         <tr>
                                             <th class="text-nowrap">Hero Title</th>
                                             <td class="text-break">{{ $homepage->hero_title ?? '-' }}</td>
@@ -85,18 +87,18 @@
                                             <td class="text-break">{{ $homepage->support_service ?? '-' }}</td>
                                         </tr>
                                         --}}
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="p-3">
-                            <p class="mb-0">Belum ada data homepage.</p>
-                        </div>
-                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <div class="p-3">
+                                <p class="mb-0">Belum ada data homepage.</p>
+                            </div>
+                        @endif
+                    </div>
                 </div>
-            </div>
 
-            {{-- ================== SERVICES ================== 
+                {{-- ================== SERVICES ================== 
             <div class="card mb-4">
                 <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
                     <h4 class="mb-2 mb-md-0">Service Homepage</h4>
@@ -121,49 +123,49 @@
             </div>
             --}}
 
-            {{-- ================== HERO SLIDER ================== --}}
-            @if (!empty($homepage->hero_images))
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0">Hero Slider (Yang Tampil di User)</h4>
-                </div>
+                {{-- ================== HERO SLIDER ================== --}}
+                @if (!empty($homepage->hero_images))
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Hero Slider (Yang Tampil di User)</h4>
+                        </div>
 
-                <div class="card-body">
-                    <div class="row">
-                        @foreach ($homepage->hero_images as $index => $slide)
-                            <div class="col-6 col-md-4 col-lg-3 mb-4">
-                                <div class="border rounded p-2 text-center h-100 d-flex flex-column">
-                                    <img src="{{ Storage::url($slide['image']) }}"
-                                         class="img-fluid rounded mb-2"
-                                         style="height:120px; object-fit:cover;">
+                        <div class="card-body">
+                            <div class="row">
+                                @foreach ($homepage->hero_images as $index => $slide)
+                                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                                        <div class="border rounded p-2 text-center h-100 d-flex flex-column">
+                                            <img src="{{ Storage::url($slide['image']) }}" class="img-fluid rounded mb-2"
+                                                style="height:120px; object-fit:cover;">
 
-                                    <div class="small text-muted">
-                                        Slide {{ $index + 1 }}
+                                            <div class="small text-muted">
+                                                Slide {{ $index + 1 }}
+                                            </div>
+
+                                            <button class="btn btn-sm btn-danger mt-auto delete-hero"
+                                                data-id="{{ $slide['id'] }}"
+                                                data-image="{{ Storage::url($slide['image']) }}">
+                                                Hapus
+                                            </button>
+                                        </div>
                                     </div>
-
-                                    <button class="btn btn-sm btn-danger mt-auto delete-hero"
-                                        data-id="{{ $slide['id'] }}"
-                                        data-image="{{ Storage::url($slide['image']) }}">
-                                        Hapus
-                                    </button>
-                                </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
                     </div>
-                </div>
-            </div>
-            @endif
+                @endif
 
+            </div>
         </div>
     </div>
-</div>
+    <form id="deleteHeroForm" method="POST" action="{{ route('admin.homepage.hero.delete') }}">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="image_id" id="deleteHeroId">
+    </form>
 @endsection
-<form id="deleteHeroForm" method="POST" action="{{ route('admin.homepage.hero.delete') }}">
-    @csrf
-    @method('DELETE')
-    <input type="hidden" name="image_id" id="deleteHeroId">
-</form>
 
+@push('modals')
     {{-- ================== MODAL EDIT HOMEPAGE ================== --}}
     <div class="modal fade" id="editHomepage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -187,27 +189,20 @@
 
                         <div class="form-group">
                             <label>Hero Title</label>
-                            <input type="text"
-                                name="hero_title"
-                                class="form-control"
+                            <input type="text" name="hero_title" class="form-control"
                                 value="{{ $homepage->hero_title ?? '' }}">
                         </div>
 
                         <div class="form-group">
                             <label>Hero Subtitle</label>
-                            <textarea name="hero_subtitle"
-                                    class="form-control"
-                                    rows="3">{{ $homepage->hero_subtitle ?? '' }}</textarea>
+                            <textarea name="hero_subtitle" class="form-control" rows="3">{{ $homepage->hero_subtitle ?? '' }}</textarea>
                         </div>
 
                         <hr>
 
                         <div class="form-group">
                             <label>Hero Slider Images</label>
-                            <input type="file"
-                                name="hero_images[]"
-                                class="form-control"
-                                multiple>
+                            <input type="file" name="hero_images[]" class="form-control" multiple>
                         </div>
 
                     </div>
@@ -217,9 +212,7 @@
                             Simpan
                         </button>
 
-                        <button type="button"
-                                class="btn btn-secondary"
-                                data-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Batal
                         </button>
                     </div>
@@ -230,6 +223,7 @@
 
         </div>
     </div>
+@endpush
 
 
 {{-- ================== MODAL EDIT SERVICES ================== 
@@ -299,88 +293,87 @@
 
 
 @push('scripts')
-<script>
-setTimeout(() => {
-    const alert = document.getElementById('success-alert');
-    if (alert) {
-        alert.classList.remove('show');
-        alert.classList.add('fade');
-        setTimeout(() => alert.remove(), 300);
-    }
-}, 3000);
-</script>
-@endpush
-
-@push('scripts')
-<script>
-$('#deleteHeroModal').on('show.bs.modal', function(event) {
-    const button = $(event.relatedTarget)
-    const imageId = button.data('id')
-    const imageUrl = button.data('image')
-
-    $('#delete-image-id').val(imageId)
-    $('#delete-image-preview').attr('src', imageUrl)
-})
-
-setTimeout(() => {
-    const alert = document.getElementById('success-alert');
-    if (alert) {
-        alert.classList.remove('show');
-        alert.classList.add('fade');
-        setTimeout(() => alert.remove(), 300);
-    }
-}, 3000);
-</script>
-@endpush
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.icon-input').forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/[a-zA-Z0-9]/g, '');
-        });
-        input.addEventListener('paste', function(e) {
-            e.preventDefault();
-        });
-    });
-});
-</script>
-@endpush
-
-@push('scripts')
-<script>
-document.querySelectorAll('.delete-hero').forEach(btn => {
-
-    btn.addEventListener('click', function(){
-
-        let id = this.dataset.id
-        let image = this.dataset.image
-
-        Swal.fire({
-            title: 'Hapus Slide?',
-            text: "Gambar ini akan dihapus!",
-            imageUrl: image,
-            imageHeight: 150,
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-                document.getElementById('deleteHeroId').value = id
-                document.getElementById('deleteHeroForm').submit()
-
+    <script>
+        setTimeout(() => {
+            const alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 300);
             }
+        }, 3000);
+    </script>
+@endpush
 
+@push('scripts')
+    <script>
+        $('#deleteHeroModal').on('show.bs.modal', function(event) {
+            const button = $(event.relatedTarget)
+            const imageId = button.data('id')
+            const imageUrl = button.data('image')
+
+            $('#delete-image-id').val(imageId)
+            $('#delete-image-preview').attr('src', imageUrl)
         })
 
-    })
+        setTimeout(() => {
+            const alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 300);
+            }
+        }, 3000);
+    </script>
+@endpush
 
-})
-</script>
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.icon-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    this.value = this.value.replace(/[a-zA-Z0-9]/g, '');
+                });
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
+@endpush
 
+@push('scripts')
+    <script>
+        document.querySelectorAll('.delete-hero').forEach(btn => {
+
+            btn.addEventListener('click', function() {
+
+                let id = this.dataset.id
+                let image = this.dataset.image
+
+                Swal.fire({
+                    title: 'Hapus Slide?',
+                    text: "Gambar ini akan dihapus!",
+                    imageUrl: image,
+                    imageHeight: 150,
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        document.getElementById('deleteHeroId').value = id
+                        document.getElementById('deleteHeroForm').submit()
+
+                    }
+
+                })
+
+            })
+
+        })
+    </script>
 @endpush

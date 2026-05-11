@@ -143,8 +143,14 @@
         }
 
         .page-section {
-            box-shadow: var(--site-shadow);
-            border: 1px solid var(--site-border);
+            padding: 45px;
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .page-section {
+                padding: 30px 15px;
+            }
         }
 
         .page-section h1,
@@ -296,47 +302,215 @@
             /* Nol-kan jarak atas navbar */
         }
 
-        /* Di Mobile, Navigasi dipaksa Fixed biar pasti nempel */
-        @media (max-width: 767px) {
+        /* ===== MOBILE HEADER & NAV ===== */
+        @media (max-width: 991px) {
             .header-sticky-wrapper {
-                position: static;
-                padding-bottom: 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background: #fff !important;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+                padding: 10px 0 !important;
+                height: 70px;
+                display: flex;
+                align-items: center;
+                z-index: 10000;
+            }
+
+            .logo-header {
+                max-width: 120px;
+                margin-left: 15px;
             }
 
             .nav-wrapper {
                 position: fixed !important;
-                top: 10px;
-                /* Kasih gap dikit dari atas biar manis */
-                left: 10px;
-                right: 10px;
-                width: calc(100% - 20px);
+                top: 70px !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                border-radius: 0 !important;
+                background: #fff !important;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                max-width: none !important;
                 z-index: 9999;
-                background: linear-gradient(135deg, #5aa1e3, #2f6fb1) !important;
-                border-radius: 40px !important;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             }
 
-            /* Kasih padding ke body biar konten gak ketutupan navbar fixed */
+            .navbar-collapse {
+                background: #fff !important;
+            }
+
+            .navbar-nav {
+                padding: 10px 0;
+            }
+
+            .nav-link {
+                color: #333 !important;
+                text-align: left !important;
+                padding: 15px 25px !important;
+                border-bottom: 1px solid #f0f0f0;
+                display: block;
+                width: 100%;
+                font-weight: 600;
+            }
+
+            .navbar-toggler {
+                position: fixed;
+                right: 15px;
+                top: 15px;
+                color: #315d8f !important;
+                background: #fff !important;
+                border: 1px solid rgba(0, 0, 0, 0.1) !important;
+                padding: 6px 10px !important;
+                border-radius: 8px !important;
+                z-index: 10001;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
             body {
-                padding-top: 15px;
-                /* Kurangi drastis biar gak kejauhan */
+                padding-top: 70px;
+            }
+
+            .header-contact, .contact-address {
+                display: none !important;
+            }
+
+            .top-header {
+                padding: 5px 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
             }
         }
 
-        .top-header {
-            margin-bottom: 0 !important;
-            /* Hapus margin bawah di logo/kontak */
+        /* ===== DESKTOP HEADER & NAV ===== */
+        @media (min-width: 992px) {
+            .header-sticky-wrapper {
+                position: sticky;
+                top: 0;
+                z-index: 1040;
+                background: #fff !important;
+                padding-top: 10px;
+                padding-bottom: 0px !important;
+                transition: all 0.3s ease;
+            }
+
+            .top-header {
+                padding: 15px 45px;
+                max-width: 100%;
+                margin: 0 !important;
+            }
+
+            .nav-wrapper {
+                background: linear-gradient(135deg, #5aa1e3, #2f6fb1) !important;
+                border-radius: 35px 35px 0 0 !important;
+                margin: 0 auto !important;
+                max-width: calc(100% - 90px);
+                width: 100% !important;
+                padding: 8px 30px !important;
+                box-shadow: 0 10px 24px rgba(13, 42, 90, 0.1);
+            }
+
+            .nav-link {
+                color: #fff !important;
+                font-weight: 600;
+            }
+
+            .nav-link:hover, .nav-link.active {
+                color: #fff !important;
+                opacity: 0.8;
+            }
+            
+            .nav-wrapper.is-sticky {
+                box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+            }
         }
 
-        .nav-wrapper.is-sticky {
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+        /* ===== GENSET MODULE ===== */
+        .genset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .genset-item {
+            text-decoration: none !important;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .genset-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .genset-img-box {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(49, 93, 143, 0.08);
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(13, 42, 90, 0.04);
+            transition: all .3s ease;
+            overflow: hidden;
+        }
+
+        .genset-img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .genset-item:hover .genset-img-box {
+            box-shadow: 0 15px 35px rgba(13, 42, 90, 0.1);
+            border-color: rgba(49, 93, 143, 0.2);
+        }
+
+        .genset-item:hover .genset-img-box img {
+            transform: scale(1.05);
+        }
+
+        .genset-label {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(49, 93, 143, 0.1);
+            background: #f8fbff;
+            color: #315d8f;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .genset-item:hover .genset-label {
+            background: #315d8f;
+            color: #fff;
+        }
+
+        @media (max-width: 767px) {
+            .genset-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            .genset-img-box {
+                height: 140px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="header-sticky-wrapper">
             <!-- ===== TOP HEADER ===== -->
@@ -394,12 +568,14 @@
 
             <!-- ===== NAV ===== -->
             <nav class="navbar navbar-expand-lg nav-wrapper">
-                <div class="container-fluid">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                    <div class="d-lg-none"></div> <!-- Spacer for mobile center if needed -->
 
                     <!-- TOGGLER -->
-                    <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                         data-bs-target="#mainNavbar">
-                        ☰
+                        <span class="fa-solid fa-bars"></span>
                     </button>
 
                     <!-- MENU -->

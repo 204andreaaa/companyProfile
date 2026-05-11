@@ -39,7 +39,7 @@ class HomepageController extends Controller
             'years_experience'   => 'nullable|integer',
             'projects_completed' => 'nullable|integer',
             'support_service'    => 'nullable|integer',
-            'hero_images.*'      => 'image|mimes:jpg,jpeg,png,webp|max:2048',
+            'hero_images.*'      => 'image|mimes:jpg,jpeg,png,webp|max:10240',
         ]);
 
         $homepage = HomepageSetting::firstOrCreate([]);

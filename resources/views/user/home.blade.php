@@ -17,13 +17,15 @@
 
         .home-anchor-section {
             padding-top: 45px;
+            padding-left: 45px;
+            padding-right: 45px;
             margin-top: 0;
             min-height: calc(100vh - 165px);
             display: flex;
             flex-direction: column;
         }
 
-        .home-anchor-section > *:last-child {
+        .home-anchor-section>*:last-child {
             margin-top: auto;
         }
 
@@ -38,14 +40,15 @@
 
         .home-white-wrapper {
             background: #fff;
-            border-radius: 18px;
-            padding: 25px 45px 10px;
+            border-radius: 0;
+            padding: 25px 0 10px;
             margin: 0;
-            box-shadow: 0 14px 34px rgba(13, 42, 90, 0.06);
+            width: 100%;
+            box-shadow: none;
         }
 
         .home-hero-wrap {
-            padding: 0;
+            padding: 0 45px;
             min-height: auto;
             margin-bottom: 50px;
         }
@@ -60,13 +63,15 @@
             margin-top: 0;
             border-radius: 24px;
             overflow: hidden;
-            height: 600px;
-            /* Gedein biar full */
+            height: 720px;
+            /* Tinggiin biar ga gepeng */
             background: #dfe5ec;
-            box-shadow: 0 18px 38px rgba(13, 42, 90, 0.10);
         }
 
         .home-hero-wrap .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transform: scale(1.01);
             filter: saturate(.96) contrast(1.03);
         }
@@ -123,11 +128,12 @@
 
         @media (max-width: 991px) {
             .home-hero-wrap {
-                padding: 18px;
+                padding: 0;
             }
 
             .home-hero-wrap .hero {
-                border-radius: 18px;
+                border-radius: 0;
+                height: 400px;
             }
 
             .home-hero-wrap .hero-overlay {
@@ -140,6 +146,16 @@
 
             .home-hero-wrap .hero-next {
                 right: 12px;
+            }
+
+            .home-white-wrapper {
+                padding: 0;
+                border-radius: 0;
+            }
+
+            .home-anchor-section {
+                padding: 30px 20px;
+                min-height: auto;
             }
         }
 
@@ -251,28 +267,22 @@
             object-fit: cover;
         }
 
-        .blog-card:hover,
-        .service-home-section .card:hover,
-        .genset-item:hover .genset-img-box {
+        .blog-card:hover {
+            box-shadow: 0 20px 36px rgba(13, 42, 90, 0.10);
+            border-color: rgba(49, 93, 143, 0.16);
             transform: translateY(-4px);
         }
 
-        .blog-card:hover,
-        .service-home-section .card:hover {
-            box-shadow: 0 20px 36px rgba(13, 42, 90, 0.10);
-            border-color: rgba(49, 93, 143, 0.16);
-        }
-
         .service-home-section .card {
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(49, 93, 143, 0.10);
-            box-shadow: 0 14px 28px rgba(13, 42, 90, 0.05);
-            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            transition: none;
         }
 
         .service-home-section .card-img-top {
             height: 230px !important;
+            object-fit: cover !important;
         }
 
         .service-home-section .card-body {
@@ -320,36 +330,6 @@
             margin: 10px auto 0;
             border-radius: 999px;
             background: linear-gradient(90deg, #77b4f2, #2f6fb1);
-        }
-
-
-        .genset-item {
-            border-radius: 18px;
-            padding: 16px 14px 12px;
-            transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
-        }
-
-        .genset-item:hover {
-            background: linear-gradient(180deg, #f8fbff, #f1f6fb);
-            box-shadow: 0 14px 28px rgba(13, 42, 90, 0.06);
-        }
-
-        .genset-img-box {
-            border-radius: 18px;
-            border: 1px solid rgba(49, 93, 143, 0.10);
-            background: #fff;
-            box-shadow: 0 12px 22px rgba(13, 42, 90, 0.05);
-            transition: transform .25s ease, box-shadow .25s ease;
-        }
-
-        .genset-label {
-            margin-top: 12px;
-            border-radius: 999px;
-            border: 1px solid rgba(49, 93, 143, 0.14);
-            background: #f8fbff;
-            color: #315d8f;
-            font-weight: 700;
-            letter-spacing: .01em;
         }
 
         .blog-body {
@@ -427,61 +407,61 @@
                     </div>
                 </div>
             </div>
-    </section>
+        </section>
 
-    <section id="about" class="home-anchor-section">
-        <div class="row align-items-center">
-            <div class="col-md-5 mb-4 mb-md-0 text-center">
-                <div class="about-image-wrap">
-                    @if ($profile && $profile->about_image)
-                        <img src="{{ asset('storage/' . $profile->about_image) }}" class="about-img" alt="About Us">
+        <section id="about" class="home-anchor-section">
+            <div class="row align-items-center">
+                <div class="col-md-5 mb-4 mb-md-0 text-center">
+                    <div class="about-image-wrap">
+                        @if ($profile && $profile->about_image)
+                            <img src="{{ asset('storage/' . $profile->about_image) }}" class="about-img" alt="About Us">
+                        @else
+                            <img src="{{ asset('genset-website/imgGenset/4.jpg') }}" class="about-img" alt="About Us">
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <h2 class="home-section-title">About Us</h2>
+
+                    @if ($profile)
+                        {!! $profile->description !!}
                     @else
-                        <img src="{{ asset('genset-website/imgGenset/4.jpg') }}" class="about-img" alt="About Us">
+                        <p>Content not available.</p>
                     @endif
                 </div>
             </div>
-
-            <div class="col-md-7">
-                <h2 class="home-section-title">About Us</h2>
-
-                @if ($profile)
-                    {!! $profile->description !!}
-                @else
-                    <p>Konten belum tersedia.</p>
-                @endif
-            </div>
-        </div>
-        @include('partials.footer-brands')
-    </section>
+            @include('partials.footer-brands')
+        </section>
 
         <section id="genset" class="home-anchor-section">
-        <h2 class="home-section-title">Genset</h2>
+            <h2 class="home-section-title">Genset</h2>
 
-        <div class="genset-grid">
-            @foreach ($brands as $brand)
-                @php
-                    $logo = $brand->logo
-                        ? asset('storage/' . $brand->logo)
-                        : asset('genset-website/img/brand/' . $brand->slug . '.png');
-                @endphp
+            <div class="genset-grid">
+                @foreach ($brands as $brand)
+                    @php
+                        $logo = $brand->logo
+                            ? asset('storage/' . $brand->logo)
+                            : asset('genset-website/img/brand/' . $brand->slug . '.png');
+                    @endphp
 
-                <a href="{{ route('user.genset.detail', $brand->slug) }}" class="genset-item">
-                    <div class="genset-img-box">
-                        <img src="{{ $logo }}" alt="{{ $brand->name }}">
-                    </div>
-                    <div class="genset-label">{{ $brand->name }}</div>
-                </a>
-            @endforeach
-        </div>
-    </section>
+                    <a href="{{ route('user.genset.detail', $brand->slug) }}" class="genset-item">
+                        <div class="genset-img-box">
+                            <img src="{{ $logo }}" alt="{{ $brand->name }}">
+                        </div>
+                        <div class="genset-label">{{ $brand->name }}</div>
+                    </a>
+                @endforeach
+            </div>
+        </section>
 
-    <section id="service" class="home-anchor-section">
+        <section id="service" class="home-anchor-section">
             <h2 class="home-section-title">Service</h2>
 
             <div class="row">
                 @foreach ($serviceCatalog as $service)
                     <div class="col-md-4 mb-2">
-                        <div class="card shadow-sm border-0">
+                        <div class="card bg-transparent border-0 shadow-none">
                             <img src="{{ $service->image_url }}" class="card-img-top"
                                 style="height:250px; object-fit:cover;">
 
@@ -492,8 +472,7 @@
                                     {{ $service->short_description }}
                                 </p>
 
-                                <a href="{{ route('service.detail', $service->slug) }}"
-                                    class="btn btn-dark w-100 mt-3">
+                                <a href="{{ route('service.detail', $service->slug) }}" class="btn btn-dark w-100 mt-3">
                                     View Detail
                                 </a>
                             </div>
@@ -501,93 +480,93 @@
                     </div>
                 @endforeach
             </div>
-        @include('partials.footer-brands')
-    </section>
+            @include('partials.footer-brands')
+        </section>
 
         <section id="blog" class="home-anchor-section">
-        <h2 class="home-section-title">Berita & Artikel</h2>
+            <h2 class="home-section-title">News & Articles</h2>
 
-        <div class="row g-4">
-            @forelse ($posts as $post)
-                <div class="col-md-4">
-                    <div class="blog-card">
-                        <div class="blog-thumb">
-                            <img src="{{ $post->image_url }}" alt="{{ $post->title }}">
-                        </div>
+            <div class="row g-4">
+                @forelse ($posts as $post)
+                    <div class="col-md-4">
+                        <div class="blog-card">
+                            <div class="blog-thumb">
+                                <img src="{{ $post->image_url }}" alt="{{ $post->title }}">
+                            </div>
 
-                        <div class="blog-body">
-                            <div class="blog-title">{{ $post->title }}</div>
+                            <div class="blog-body">
+                                <div class="blog-title">{{ $post->title }}</div>
 
-                            <p class="blog-desc">
-                                {{ $post->excerpt }}
-                            </p>
+                                <p class="blog-desc">
+                                    {{ $post->excerpt }}
+                                </p>
 
-                            <a href="{{ route('blog-detail', $post->slug) }}" class="blog-link">
-                                Baca selengkapnya →
-                            </a>
+                                <a href="{{ route('blog-detail', $post->slug) }}" class="blog-link">
+                                    Read more →
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <p>Belum ada artikel.</p>
-            @endforelse
-        </div>
-        @include('partials.footer-brands')
-    </section>
+                @empty
+                    <p>No articles yet.</p>
+                @endforelse
+            </div>
+            @include('partials.footer-brands')
+        </section>
 
         <section id="contact" class="home-anchor-section">
-        <div class="row g-4">
-            <div class="col-md-7">
-                <div class="home-contact-title">Contact Us</div>
+            <div class="row g-4">
+                <div class="col-md-7">
+                    <div class="home-contact-title">Contact Us</div>
 
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form class="contact-form" action="{{ route('contact.store') }}" method="POST">
-                    @csrf
-                    <input type="text" name="name" placeholder="Name" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="text" name="subject" placeholder="Subject" required>
-                    <textarea name="message" placeholder="Message" required></textarea>
-                    <button type="submit" class="btn-submit mt-2">Submit</button>
-                </form>
-            </div>
-
-            <div class="col-md-5">
-                <div class="home-contact-title">Find Us</div>
-                <div class="map-box">
-                    @if ($settings?->map_embed_url)
-                        <iframe src="{{ $settings->map_embed_url }}" width="100%" height="100%" style="border:0;"
-                            loading="lazy"></iframe>
-                    @else
-                        <div class="text-muted">Map not configured.</div>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
                     @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form class="contact-form" action="{{ route('contact.store') }}" method="POST">
+                        @csrf
+                        <input type="text" name="name" placeholder="Name" required>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="text" name="subject" placeholder="Subject" required>
+                        <textarea name="message" placeholder="Message" required></textarea>
+                        <button type="submit" class="btn-submit mt-2">Submit</button>
+                    </form>
                 </div>
 
-                <div class="address">
-                    @if ($settings?->location_name)
-                        <strong>{{ $settings->location_name }}</strong><br>
-                    @endif
+                <div class="col-md-5">
+                    <div class="home-contact-title">Find Us</div>
+                    <div class="map-box">
+                        @if ($settings?->map_embed_url)
+                            <iframe src="{{ $settings->map_embed_url }}" width="100%" height="100%" style="border:0;"
+                                loading="lazy"></iframe>
+                        @else
+                            <div class="text-muted">Map not configured.</div>
+                        @endif
+                    </div>
 
-                    @if ($settings?->address)
-                        {!! nl2br(e($settings->address)) !!}
-                    @endif
+                    <div class="address">
+                        @if ($settings?->location_name)
+                            <strong>{{ $settings->location_name }}</strong><br>
+                        @endif
+
+                        @if ($settings?->address)
+                            {!! nl2br(e($settings->address)) !!}
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
             @include('partials.footer-brands')
         </section>
     </div>

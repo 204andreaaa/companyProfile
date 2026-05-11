@@ -10,9 +10,8 @@
         <div class="row align-items-center">
 
             <div class="col-md-6">
-                <div class="shadow rounded overflow-hidden">
+                <div class="overflow-hidden">
                     <img src="{{ $service->image_url }}" class="w-100" style="height:400px; object-fit:cover;">
-
                 </div>
             </div>
 
