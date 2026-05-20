@@ -13,6 +13,7 @@ use App\Models\GensetSpec;
 use App\Models\HomepageService;
 use App\Models\HomepageSetting;
 use App\Models\Post;
+use App\Models\Project;
 use App\Models\Service;
 use App\Models\VisionMission;
 use App\Models\WebsiteSetting;
@@ -40,6 +41,11 @@ class HomeController extends Controller
             ->latest()
             ->take(3)
             ->get();
+        $projects = Project::with('images')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderByDesc('id')
+            ->get();
         $settings = WebsiteSetting::first();
 
         // HANYA gallery yang is_active = 1
@@ -56,6 +62,7 @@ class HomeController extends Controller
             'brands'        => $brands,
             'serviceCatalog'=> $serviceCatalog,
             'posts'         => $posts,
+            'projects'      => $projects,
             'settings'      => $settings,
         ]);
     }

@@ -28,6 +28,12 @@ class WebsiteSettingController extends Controller
             'address' => 'nullable|string',
             'map_zoom' => 'nullable|integer|min:10|max:20',
             'wa_template' => 'nullable|string',
+            'contact_footer_names' => 'nullable|string',
+            'navbar_color_start' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'navbar_color_end' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'button_color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'button_text_color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
         ]);
 
         $settings = WebsiteSetting::first();
@@ -38,6 +44,11 @@ class WebsiteSettingController extends Controller
             'address' => $request->address,
             'map_zoom' => $request->map_zoom ?? 17,
             'wa_template' => $request->wa_template,
+            'contact_footer_names' => $request->contact_footer_names,
+            'navbar_color_start' => $request->navbar_color_start ?? '#5aa1e3',
+            'navbar_color_end' => $request->navbar_color_end ?? '#2f6fb1',
+            'button_color' => $request->button_color ?? '#b91c1c',
+            'button_text_color' => $request->button_text_color ?? '#ffffff',
         ];
 
         // 🔥 AUTO GENERATE EMBED LINK

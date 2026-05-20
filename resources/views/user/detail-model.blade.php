@@ -8,9 +8,9 @@
 
         .detail-card {
             background: #fff;
-            border-radius: 16px;
+            border-radius: 0;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            box-shadow: none;
         }
 
         .detail-img {
@@ -114,17 +114,17 @@
                     <hr>
                     <table class="table spec-table">
                         <tr>
-                            <td>Tipe Mesin</td>
+                            <td>Engine Type</td>
                             <td>:</td>
                             <td>{{ optional($spec->modelDetail)->tipe_mesin }}</td>
                         </tr>
                         <tr>
-                            <td>Nomor Silinder</td>
+                            <td>Cylinder Number</td>
                             <td>:</td>
                             <td>{{ optional($spec->modelDetail)->nomor_silinder }}</td>
                         </tr>
                         <tr>
-                            <td>Ukuran Silinder</td>
+                            <td>Cylinder Size</td>
                             <td>:</td>
                             <td>{{ optional($spec->modelDetail)->ukuran_silinder }}</td>
                         </tr>
@@ -139,14 +139,9 @@
                             <td>{{ optional($spec->modelDetail)->displacement }}</td>
                         </tr>
                         <tr>
-                            <td>Konsumsi Bahan Bakar</td>
+                            <td>Fuel Consumption</td>
                             <td>:</td>
                             <td>{{ $spec->fuel }}</td>
-                        </tr>
-                        <tr>
-                            <td>Kapasitas Minyak</td>
-                            <td>:</td>
-                            <td>{{ optional($spec->modelDetail)->kapasitas_minyak }}</td>
                         </tr>
                         <tr>
                             <td>Generator</td>
@@ -156,7 +151,7 @@
                     </table>
 
                     <h5 class="mt-4 mb-3">
-                        Permintaan Penawaran
+                        Request for Quotation
                     </h5>
                     <hr>
                     {{-- 
@@ -174,27 +169,27 @@
                                 <div class="col-md-9">
 
                                     <div class="mb-3">
-                                        <label>Nama</label>
+                                        <label>Name</label>
                                         <input type="text" name="name" class="form-control" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label>Alamat email</label>
+                                        <label>Email address</label>
                                         <input type="email" name="email" class="form-control" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label>No. Telp</label>
+                                        <label>Phone Number</label>
                                         <input type="text" name="phone" class="form-control" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label>Alamat</label>
+                                        <label>Address</label>
                                         <textarea name="address" class="form-control"></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label>Permintaan</label>
+                                        <label>Request</label>
                                         <textarea name="note" class="form-control"></textarea>
                                     </div>
 
@@ -278,7 +273,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-dark mt-3">
-                                Kirim Permintaan
+                                Send Request
                             </button>
 
                         </div>
@@ -377,7 +372,7 @@
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Berhasil!',
+                    title: 'Success!',
                     text: '{{ session('success') }}',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK'

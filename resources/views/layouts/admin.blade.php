@@ -205,6 +205,12 @@
             </a>
             </li>
 
+            <li class="{{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.projects.index') }}">
+                <i class="fas fa-briefcase"></i> <span>Project</span>
+            </a>
+            </li>
+
             <li class="{{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.requests.index') }}">
                 <i class="fas fa-images"></i> <span>Cust Required</span>

@@ -33,6 +33,10 @@
             --site-text: #46576b;
             --site-border: rgba(49, 93, 143, .10);
             --site-shadow: 0 16px 34px rgba(13, 42, 90, .07);
+            --navbar-color-start: {{ $globalSettings?->navbar_color_start ?? '#5aa1e3' }};
+            --navbar-color-end: {{ $globalSettings?->navbar_color_end ?? '#2f6fb1' }};
+            --button-color: {{ $globalSettings?->button_color ?? '#b91c1c' }};
+            --button-text-color: {{ $globalSettings?->button_text_color ?? '#ffffff' }};
         }
 
         body {
@@ -143,8 +147,14 @@
         }
 
         .page-section {
-            box-shadow: var(--site-shadow);
-            border: 1px solid var(--site-border);
+            padding: 45px;
+            width: 100%;
+        }
+
+        @media (max-width: 767px) {
+            .page-section {
+                padding: 30px 15px;
+            }
         }
 
         .page-section h1,
@@ -248,6 +258,78 @@
             object-fit: contain;
         }
 
+        .btn-submit,
+        .btn.btn-dark,
+        .btn.btn-primary {
+            background: var(--button-color) !important;
+            color: var(--button-text-color) !important;
+            border-color: var(--button-color) !important;
+        }
+
+        .btn-submit:hover,
+        .btn.btn-dark:hover,
+        .btn.btn-primary:hover {
+            filter: brightness(.92);
+            color: var(--button-text-color) !important;
+        }
+
+        .navbar-nav .nav-link::after {
+            background: var(--button-text-color) !important;
+        }
+
+        .contact-footer-names {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 0;
+            margin-top: 42px;
+            padding-top: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: #1672bf;
+            line-height: 1.4;
+        }
+
+        #contact .contact-footer-names,
+        .page-section>.contact-footer-names {
+            margin-top: 42px;
+        }
+
+        .contact-footer-names a,
+        .contact-footer-names span {
+            display: inline-flex;
+            align-items: center;
+            color: #1672bf;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .contact-footer-names a:hover {
+            color: #0d4f91;
+        }
+
+        .contact-footer-names a:not(:last-child)::after,
+        .contact-footer-names span:not(:last-child)::after {
+            content: "|";
+            margin: 0 20px;
+            color: #1672bf;
+            font-weight: 500;
+        }
+
+        @media (max-width: 767px) {
+            .contact-footer-names {
+                justify-content: center;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            .contact-footer-names a:not(:last-child)::after,
+            .contact-footer-names span:not(:last-child)::after {
+                margin: 0 12px;
+            }
+        }
+
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(26px);
@@ -296,47 +378,214 @@
             /* Nol-kan jarak atas navbar */
         }
 
-        /* Di Mobile, Navigasi dipaksa Fixed biar pasti nempel */
-        @media (max-width: 767px) {
+        /* ===== MOBILE HEADER & NAV ===== */
+        @media (max-width: 991px) {
             .header-sticky-wrapper {
-                position: static;
-                padding-bottom: 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background: #fff !important;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+                padding: 10px 0 !important;
+                height: 70px;
+                display: flex;
+                align-items: center;
+                z-index: 10000;
+            }
+
+            .logo-header {
+                max-width: 120px;
+                margin-left: 15px;
             }
 
             .nav-wrapper {
                 position: fixed !important;
-                top: 10px;
-                /* Kasih gap dikit dari atas biar manis */
-                left: 10px;
-                right: 10px;
-                width: calc(100% - 20px);
+                top: 70px !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                border-radius: 0 !important;
+                background: #fff !important;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                max-width: none !important;
                 z-index: 9999;
-                background: linear-gradient(135deg, #5aa1e3, #2f6fb1) !important;
-                border-radius: 40px !important;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
             }
 
-            /* Kasih padding ke body biar konten gak ketutupan navbar fixed */
+            .navbar-collapse {
+                background: #fff !important;
+            }
+
+            .navbar-nav {
+                padding: 10px 0;
+            }
+
+            .nav-link {
+                color: #333 !important;
+                text-align: left !important;
+                padding: 15px 25px !important;
+                border-bottom: 1px solid #f0f0f0;
+                display: block;
+                width: 100%;
+                font-weight: 600;
+            }
+
+            .navbar-toggler {
+                position: fixed;
+                right: 15px;
+                top: 15px;
+                color: var(--navbar-color-end) !important;
+                background: #fff !important;
+                border: 1px solid rgba(0, 0, 0, 0.1) !important;
+                padding: 6px 10px !important;
+                border-radius: 8px !important;
+                z-index: 10001;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
             body {
-                padding-top: 15px;
-                /* Kurangi drastis biar gak kejauhan */
+                padding-top: 70px;
+            }
+
+            .header-contact, .contact-address {
+                display: none !important;
+            }
+
+            .top-header {
+                padding: 5px 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
             }
         }
 
-        .top-header {
-            margin-bottom: 0 !important;
-            /* Hapus margin bawah di logo/kontak */
+        /* ===== DESKTOP HEADER & NAV ===== */
+        @media (min-width: 992px) {
+            .header-sticky-wrapper {
+                position: sticky;
+                top: 0;
+                z-index: 1040;
+                background: #fff !important;
+                padding-top: 10px;
+                padding-bottom: 0px !important;
+                transition: all 0.3s ease;
+            }
+
+            .top-header {
+                padding: 15px 45px;
+                max-width: 100%;
+                margin: 0 !important;
+            }
+
+            .nav-wrapper {
+                background: linear-gradient(135deg, var(--navbar-color-start), var(--navbar-color-end)) !important;
+                border-radius: 35px 35px 0 0 !important;
+                margin: 0 auto !important;
+                max-width: calc(100% - 90px);
+                width: 100% !important;
+                padding: 8px 30px !important;
+                box-shadow: 0 10px 24px rgba(13, 42, 90, 0.1);
+            }
+
+            .nav-link {
+                color: var(--button-text-color) !important;
+                font-weight: 600;
+            }
+
+            .nav-link:hover, .nav-link.active {
+                color: var(--button-text-color) !important;
+                opacity: 0.8;
+            }
+            
+            .nav-wrapper.is-sticky {
+                box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+            }
         }
 
-        .nav-wrapper.is-sticky {
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+        /* ===== GENSET MODULE ===== */
+        .genset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .genset-item {
+            text-decoration: none !important;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .genset-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .genset-img-box {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            transition: all .3s ease;
+            overflow: hidden;
+        }
+
+        .genset-img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .genset-item:hover .genset-img-box {
+            box-shadow: none;
+        }
+
+        .genset-item:hover .genset-img-box img {
+            transform: scale(1.05);
+        }
+
+        .genset-label {
+            margin-top: 15px;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            color: #000;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .genset-item:hover .genset-label {
+            background: transparent;
+            color: #000;
+        }
+
+        @media (max-width: 767px) {
+            .genset-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            .genset-img-box {
+                height: 140px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="header-sticky-wrapper">
             <!-- ===== TOP HEADER ===== -->
@@ -394,12 +643,14 @@
 
             <!-- ===== NAV ===== -->
             <nav class="navbar navbar-expand-lg nav-wrapper">
-                <div class="container-fluid">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+
+                    <div class="d-lg-none"></div> <!-- Spacer for mobile center if needed -->
 
                     <!-- TOGGLER -->
-                    <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                         data-bs-target="#mainNavbar">
-                        ☰
+                        <span class="fa-solid fa-bars"></span>
                     </button>
 
                     <!-- MENU -->
@@ -427,6 +678,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}#service" data-nav-link="service">
                                     Service
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}#project" data-nav-link="project">
+                                    Project
                                 </a>
                             </li>
 

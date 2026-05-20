@@ -138,7 +138,7 @@ class PostController extends Controller
             'excerpt' => 'nullable|string',
             'body'    => 'required|string',
             'status'  => 'required|in:draft,published',
-            'image'   => 'nullable|image|max:2048',
+            'image'   => 'nullable|image|max:15360',
         ]);
     }
 }

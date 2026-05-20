@@ -76,19 +76,19 @@
                     <div class="row">
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tipe Mesin</label>
+                            <label class="form-label">Engine Type</label>
                             <input type="text" name="tipe_mesin"
                                 value="{{ optional($spec->modelDetail)->tipe_mesin }}" class="form-control">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Nomor Silinder</label>
+                            <label class="form-label">Cylinder Number</label>
                             <input type="text" name="nomor_silinder"
                                 value="{{ optional($spec->modelDetail)->nomor_silinder }}" class="form-control">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Ukuran Silinder</label>
+                            <label class="form-label">Cylinder Size</label>
                             <input type="text" name="ukuran_silinder"
                                 value="{{ optional($spec->modelDetail)->ukuran_silinder }}" class="form-control">
                         </div>
@@ -105,11 +105,7 @@
                                 value="{{ optional($spec->modelDetail)->displacement }}" class="form-control">
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Kapasitas Minyak</label>
-                            <input type="text" name="kapasitas_minyak"
-                                value="{{ optional($spec->modelDetail)->kapasitas_minyak }}" class="form-control">
-                        </div>
+
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Generator</label>

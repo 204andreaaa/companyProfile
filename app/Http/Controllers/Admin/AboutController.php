@@ -22,7 +22,7 @@ class AboutController extends Controller
     {
         $data = $request->validate([
             'description' => 'required|string',
-            'about_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'about_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
         ]);
 
         $profile = CompanyProfile::first();
