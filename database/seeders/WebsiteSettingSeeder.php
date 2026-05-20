@@ -37,7 +37,22 @@ Terima kasih atas inquiry Anda mengenai:
 Catatan:
 {note}
 
-Tim kami akan segera menghubungi Anda."
+Tim kami akan segera menghubungi Anda.",
+
+                'contact_footer_names' => "Kubota
+Perkins
+Mitsubishi
+MTU
+Himoinsa
+Doosan
+Yanmar
+Cummins
+FPT_Iveco",
+
+                'navbar_color_start' => '#5aa1e3',
+                'navbar_color_end' => '#2f6fb1',
+                'button_color' => '#b91c1c',
+                'button_text_color' => '#ffffff',
             ]
         );
     }

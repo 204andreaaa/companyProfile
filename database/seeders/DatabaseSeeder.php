@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\VisionMissionSeeder::class,
             \Database\Seeders\ProductSeeder::class,
             \Database\Seeders\PostSeeder::class,
+            \Database\Seeders\ProjectSeeder::class,
             \Database\Seeders\ContactMessageSeeder::class,
             \Database\Seeders\ServiceSeeder::class,
             \Database\Seeders\GensetSeeder::class,

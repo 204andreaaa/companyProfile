@@ -42,7 +42,7 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'model' => 'required',
             'engine' => 'required',
-            'image' => 'nullable|image'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360'
         ]);
 
         $exists = GensetSpec::where('brand_id', $request->brand_id)
@@ -92,6 +92,10 @@ class ProductController extends Controller
 
     public function updateSpec(Request $request,$id)
     {
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
+        ]);
+
         $spec = GensetSpec::findOrFail($id);
 
         $data = $request->only([
@@ -138,6 +142,11 @@ class ProductController extends Controller
     }
     public function updateBrand(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
+        ]);
+
         $brand = Brand::findOrFail($id);
 
         $data = [
@@ -171,7 +180,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:brands,name',
-            'logo' => 'nullable|image'
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360'
         ]);
 
         $data = [

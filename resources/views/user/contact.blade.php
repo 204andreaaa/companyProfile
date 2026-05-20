@@ -63,6 +63,6 @@
                 </div>
             </div>
         </div>
-        @include('partials.footer-brands')
+        @include('partials.contact-footer-names')
     </div>
 @endsection

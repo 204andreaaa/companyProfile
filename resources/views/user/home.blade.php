@@ -166,12 +166,14 @@
         }
 
         #service,
+        #project,
         #blog {
             display: block;
             width: 100%;
         }
 
         #service .home-section-title,
+        #project .home-section-title,
         #blog .home-section-title,
         #genset .home-section-title,
         #about .home-section-title {
@@ -216,10 +218,10 @@
             justify-content: center;
             align-items: center;
             padding: 24px;
-            border-radius: 24px;
-            background: linear-gradient(180deg, #f7fbff, #eef4fb);
-            border: 1px solid rgba(49, 93, 143, 0.08);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border-radius: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         .about-img {
@@ -227,8 +229,8 @@
             max-width: 390px;
             height: auto;
             object-fit: contain;
-            border-radius: 18px;
-            filter: drop-shadow(0 18px 26px rgba(13, 42, 90, 0.14));
+            border-radius: 0;
+            filter: none;
         }
 
         #about .col-md-7 {
@@ -242,13 +244,13 @@
         }
 
         .blog-card {
-            background: #fff;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(49, 93, 143, 0.10);
+            background: transparent;
+            border-radius: 0;
+            overflow: visible;
+            border: none;
             height: 100%;
-            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-            box-shadow: 0 14px 28px rgba(13, 42, 90, 0.05);
+            transition: transform .25s ease;
+            box-shadow: none;
         }
 
         .blog-thumb {
@@ -257,8 +259,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5f5f5;
-            overflow: hidden;
+            background: transparent;
+            overflow: visible;
         }
 
         .blog-thumb img {
@@ -268,8 +270,7 @@
         }
 
         .blog-card:hover {
-            box-shadow: 0 20px 36px rgba(13, 42, 90, 0.10);
-            border-color: rgba(49, 93, 143, 0.16);
+            box-shadow: none;
             transform: translateY(-4px);
         }
 
@@ -303,11 +304,12 @@
         }
 
         .service-home-section .btn-dark {
-            background: linear-gradient(135deg, #24384f, #314d6d);
+            background: var(--button-color);
             border: 0;
             border-radius: 999px;
             padding: 10px 18px;
             font-weight: 600;
+            color: var(--button-text-color);
             box-shadow: 0 10px 20px rgba(36, 56, 79, 0.18);
         }
 
@@ -333,7 +335,10 @@
         }
 
         .blog-body {
-            padding: 18px 18px 22px;
+            padding: 18px 0 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         .blog-link {
@@ -343,6 +348,76 @@
 
         .blog-link:hover {
             color: #1f3550;
+        }
+
+        .project-card {
+            height: 100%;
+            overflow: visible;
+            border-radius: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            transition: transform .25s ease;
+        }
+
+        .project-grid {
+            --bs-gutter-x: 46px;
+            --bs-gutter-y: 42px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: none;
+        }
+
+        .project-slider {
+            width: 100%;
+            height: 230px;
+            background: transparent;
+        }
+
+        .project-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-body {
+            padding: 18px 0 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .project-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1f3550;
+            font-size: 17px;
+            line-height: 1.35;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-wrap: balance;
+        }
+
+        .project-location,
+        .project-desc {
+            color: #637487;
+            line-height: 1.7;
+        }
+
+        .project-pagination {
+            bottom: 8px !important;
+        }
+
+        .project-pagination .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, .95);
+            opacity: .75;
+        }
+
+        .project-pagination .swiper-pagination-bullet-active {
+            background: #315d8f;
+            opacity: 1;
         }
 
         @media (max-width: 991px) {
@@ -453,6 +528,7 @@
                     </a>
                 @endforeach
             </div>
+
         </section>
 
         <section id="service" class="home-anchor-section">
@@ -480,6 +556,55 @@
                     </div>
                 @endforeach
             </div>
+            @include('partials.footer-brands')
+        </section>
+
+        <section id="project" class="home-anchor-section">
+            <h2 class="home-section-title">Project</h2>
+
+            <div class="row project-grid">
+                @forelse ($projects as $project)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="project-card">
+                            <div class="swiper projectSwiper project-slider">
+                                <div class="swiper-wrapper">
+                                    @if ($project->images->isNotEmpty())
+                                        @foreach ($project->images as $image)
+                                            <div class="swiper-slide">
+                                                <img src="{{ $image->image_url }}" alt="{{ $project->title }}">
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        @foreach ($project->fallbackSlides() as $fallback)
+                                            <div class="swiper-slide">
+                                                <img src="{{ $fallback }}" alt="{{ $project->title }}">
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="swiper-pagination project-pagination"></div>
+                            </div>
+
+                            <div class="project-body">
+                                <div class="project-title">{{ $project->title }}</div>
+
+                                @if ($project->location)
+                                    <div class="project-location small mb-2">
+                                        <i class="fas fa-map-marker-alt"></i> {{ $project->location }}
+                                    </div>
+                                @endif
+
+                                @if ($project->description)
+                                    <p class="project-desc small mb-0">{{ $project->description }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-muted">Belum ada project.</p>
+                @endforelse
+            </div>
+
             @include('partials.footer-brands')
         </section>
 
@@ -567,7 +692,7 @@
                     </div>
                 </div>
             </div>
-            @include('partials.footer-brands')
+            @include('partials.contact-footer-names')
         </section>
     </div>
 
@@ -592,7 +717,22 @@
         });
 
         const navLinks = document.querySelectorAll('[data-nav-link]');
-        const sections = ['home', 'about', 'genset', 'service', 'blog', 'contact']
+        document.querySelectorAll('.projectSwiper').forEach((slider) => {
+            new Swiper(slider, {
+                loop: true,
+                autoplay: {
+                    delay: 2600,
+                    disableOnInteraction: false,
+                },
+                speed: 650,
+                pagination: {
+                    el: slider.querySelector('.project-pagination'),
+                    clickable: true,
+                }
+            });
+        });
+
+        const sections = ['home', 'about', 'genset', 'service', 'project', 'blog', 'contact']
             .map(id => document.getElementById(id))
             .filter(Boolean);
 

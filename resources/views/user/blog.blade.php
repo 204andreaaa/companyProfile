@@ -1,10 +1,11 @@
 @extends('layouts.userLayouts')
 <style>
     .blog-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #eee;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+    border: none;
+    box-shadow: none;
     height: 100%;
 }
 
@@ -14,14 +15,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f5f5f5;
-    overflow: hidden;
+    background: transparent;
+    overflow: visible;
 }
 
 .blog-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;          /* INI YANG BIKIN CAKEP */
+}
+
+.blog-body {
+    padding: 18px 0 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 </style>

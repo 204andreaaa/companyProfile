@@ -13,7 +13,7 @@
     max-width: 420px;   /* kontrol BESAR gambar */
     height: auto;
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 0;
 }
 
 </style>

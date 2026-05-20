@@ -98,7 +98,7 @@ class CompanyValueController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'order'       => 'nullable|integer|min:0',
-            'image'       => 'nullable|image|max:2048',
+            'image'       => 'nullable|image|max:15360',
         ]);
     }
 

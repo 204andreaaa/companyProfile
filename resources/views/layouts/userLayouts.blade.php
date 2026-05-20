@@ -33,6 +33,10 @@
             --site-text: #46576b;
             --site-border: rgba(49, 93, 143, .10);
             --site-shadow: 0 16px 34px rgba(13, 42, 90, .07);
+            --navbar-color-start: {{ $globalSettings?->navbar_color_start ?? '#5aa1e3' }};
+            --navbar-color-end: {{ $globalSettings?->navbar_color_end ?? '#2f6fb1' }};
+            --button-color: {{ $globalSettings?->button_color ?? '#b91c1c' }};
+            --button-text-color: {{ $globalSettings?->button_text_color ?? '#ffffff' }};
         }
 
         body {
@@ -254,6 +258,78 @@
             object-fit: contain;
         }
 
+        .btn-submit,
+        .btn.btn-dark,
+        .btn.btn-primary {
+            background: var(--button-color) !important;
+            color: var(--button-text-color) !important;
+            border-color: var(--button-color) !important;
+        }
+
+        .btn-submit:hover,
+        .btn.btn-dark:hover,
+        .btn.btn-primary:hover {
+            filter: brightness(.92);
+            color: var(--button-text-color) !important;
+        }
+
+        .navbar-nav .nav-link::after {
+            background: var(--button-text-color) !important;
+        }
+
+        .contact-footer-names {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 0;
+            margin-top: 42px;
+            padding-top: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: #1672bf;
+            line-height: 1.4;
+        }
+
+        #contact .contact-footer-names,
+        .page-section>.contact-footer-names {
+            margin-top: 42px;
+        }
+
+        .contact-footer-names a,
+        .contact-footer-names span {
+            display: inline-flex;
+            align-items: center;
+            color: #1672bf;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .contact-footer-names a:hover {
+            color: #0d4f91;
+        }
+
+        .contact-footer-names a:not(:last-child)::after,
+        .contact-footer-names span:not(:last-child)::after {
+            content: "|";
+            margin: 0 20px;
+            color: #1672bf;
+            font-weight: 500;
+        }
+
+        @media (max-width: 767px) {
+            .contact-footer-names {
+                justify-content: center;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            .contact-footer-names a:not(:last-child)::after,
+            .contact-footer-names span:not(:last-child)::after {
+                margin: 0 12px;
+            }
+        }
+
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(26px);
@@ -361,7 +437,7 @@
                 position: fixed;
                 right: 15px;
                 top: 15px;
-                color: #315d8f !important;
+                color: var(--navbar-color-end) !important;
                 background: #fff !important;
                 border: 1px solid rgba(0, 0, 0, 0.1) !important;
                 padding: 6px 10px !important;
@@ -406,7 +482,7 @@
             }
 
             .nav-wrapper {
-                background: linear-gradient(135deg, #5aa1e3, #2f6fb1) !important;
+                background: linear-gradient(135deg, var(--navbar-color-start), var(--navbar-color-end)) !important;
                 border-radius: 35px 35px 0 0 !important;
                 margin: 0 auto !important;
                 max-width: calc(100% - 90px);
@@ -416,12 +492,12 @@
             }
 
             .nav-link {
-                color: #fff !important;
+                color: var(--button-text-color) !important;
                 font-weight: 600;
             }
 
             .nav-link:hover, .nav-link.active {
-                color: #fff !important;
+                color: var(--button-text-color) !important;
                 opacity: 0.8;
             }
             
@@ -454,10 +530,10 @@
             align-items: center;
             justify-content: center;
             padding: 25px;
-            border-radius: 20px;
-            border: 1px solid rgba(49, 93, 143, 0.08);
-            background: #fff;
-            box-shadow: 0 10px 30px rgba(13, 42, 90, 0.04);
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            box-shadow: none;
             transition: all .3s ease;
             overflow: hidden;
         }
@@ -470,8 +546,7 @@
         }
 
         .genset-item:hover .genset-img-box {
-            box-shadow: 0 15px 35px rgba(13, 42, 90, 0.1);
-            border-color: rgba(49, 93, 143, 0.2);
+            box-shadow: none;
         }
 
         .genset-item:hover .genset-img-box img {
@@ -480,19 +555,19 @@
 
         .genset-label {
             margin-top: 15px;
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(49, 93, 143, 0.1);
-            background: #f8fbff;
-            color: #315d8f;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            color: #000;
             font-weight: 700;
             text-align: center;
             transition: all 0.3s ease;
         }
 
         .genset-item:hover .genset-label {
-            background: #315d8f;
-            color: #fff;
+            background: transparent;
+            color: #000;
         }
 
         @media (max-width: 767px) {
@@ -603,6 +678,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}#service" data-nav-link="service">
                                     Service
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}#project" data-nav-link="project">
+                                    Project
                                 </a>
                             </li>
 

@@ -73,6 +73,59 @@
                                       rows="3">{{ $settings->address }}</textarea>
                         </div>
 
+                        <!-- CONTACT FOOTER BRAND NAMES -->
+                        <div class="mb-4">
+                            <label class="font-weight-bold">Contact Footer Brand Names</label>
+                            <textarea name="contact_footer_names"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Kubota&#10;Perkins&#10;Mitsubishi&#10;MTU&#10;Himoinsa">{{ old('contact_footer_names', $settings->contact_footer_names ?? '') }}</textarea>
+                            <small class="text-muted">
+                                Satu nama per baris. Kalau dikosongkan, footer Contact otomatis memakai nama brand aktif dari menu Genset.
+                            </small>
+                        </div>
+
+                        <!-- THEME COLORS -->
+                        <div class="mb-4">
+                            <label class="font-weight-bold">Website Theme Colors</label>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="small text-muted mb-1">Navbar Color Start</label>
+                                    <input type="color"
+                                           name="navbar_color_start"
+                                           class="form-control"
+                                           value="{{ old('navbar_color_start', $settings->navbar_color_start ?? '#5aa1e3') }}">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="small text-muted mb-1">Navbar Color End</label>
+                                    <input type="color"
+                                           name="navbar_color_end"
+                                           class="form-control"
+                                           value="{{ old('navbar_color_end', $settings->navbar_color_end ?? '#2f6fb1') }}">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="small text-muted mb-1">Button Color</label>
+                                    <input type="color"
+                                           name="button_color"
+                                           class="form-control"
+                                           value="{{ old('button_color', $settings->button_color ?? '#b91c1c') }}">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="small text-muted mb-1">Button Text Color</label>
+                                    <input type="color"
+                                           name="button_text_color"
+                                           class="form-control"
+                                           value="{{ old('button_text_color', $settings->button_text_color ?? '#ffffff') }}">
+                                </div>
+                            </div>
+                            <small class="text-muted">
+                                Warna ini berlaku untuk navbar dan tombol utama di website.
+                            </small>
+                        </div>
+
                         <!-- MAP ZOOM -->
                         <div class="mb-4">
                             <label class="font-weight-bold">Map Zoom Level</label>

@@ -14,7 +14,12 @@ class WebsiteSetting extends Model
         'address',
         'map_zoom',
         'map_embed_url',
-        'wa_template'
+        'wa_template',
+        'contact_footer_names',
+        'navbar_color_start',
+        'navbar_color_end',
+        'button_color',
+        'button_text_color',
     ];
 
     public function getLogoUrlAttribute()

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GensetInquiryController;
 use App\Http\Controllers\Admin\HomepageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VisionMissionController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
@@ -155,7 +156,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/settings', [WebsiteSettingController::class, 'update'])->name('settings.update');
         
 
-        Route::resource('posts', PostController::class)->except(['create', 'edit']);
+    Route::resource('posts', PostController::class)->except(['create', 'edit']);
+
+        Route::resource('projects', ProjectController::class)->except(['create', 'edit', 'show']);
+        Route::delete('project-images/{image}', [ProjectController::class, 'destroyImage'])
+            ->name('project-images.destroy');
 
         Route::get('vision-mission', [VisionMissionController::class, 'edit'])->name('vision-mission.edit');
         Route::put('vision-mission', [VisionMissionController::class, 'update'])->name('vision-mission.update');
