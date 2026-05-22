@@ -48,84 +48,116 @@
         }
 
         .home-hero-wrap {
-            padding: 0 45px;
-            min-height: auto;
-            margin-bottom: 50px;
-        }
+    padding: 0;
+    min-height: auto;
+    margin-bottom: 50px;
+}
 
-        .home-hero-wrap .hero-section {
-            width: 100%;
-            max-width: none;
-            margin: 0 auto;
-        }
+.home-hero-wrap .hero-section {
+    width: calc(100% - var(--desktop-nav-gap));
+    max-width: calc(100% - var(--desktop-nav-gap));
+    margin: 14px auto 0;
+}
 
-        .home-hero-wrap .hero {
-            margin-top: 0;
-            border-radius: 24px;
-            overflow: hidden;
-            height: 720px;
-            /* Tinggiin biar ga gepeng */
-            background: #dfe5ec;
-        }
+.home-hero-wrap .hero {
+    position: relative;
+    margin-top: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    height: clamp(520px, 42vw, 720px);
+    background: #dfe5ec;
+}
 
-        .home-hero-wrap .hero img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.01);
-            filter: saturate(.96) contrast(1.03);
-        }
+.home-hero-wrap .heroSwiper,
+.home-hero-wrap .heroSwiper .swiper-wrapper,
+.home-hero-wrap .heroSwiper .swiper-slide {
+    width: 100%;
+    height: 100%;
+}
 
-        .home-hero-wrap .hero-overlay {
-            padding: 0 72px;
-            background: linear-gradient(94deg, rgba(8, 19, 35, 0.78), rgba(8, 19, 35, 0.34) 48%, rgba(8, 19, 35, 0.08));
-        }
+.home-hero-wrap .heroSwiper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
 
-        .home-hero-wrap .hero-overlay>div {
-            max-width: 760px;
-        }
+.home-hero-wrap .heroSwiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #dfe5ec;
+}
 
-        .home-hero-wrap .hero-overlay h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(34px, 4.2vw, 56px);
-            line-height: 1.08;
-            letter-spacing: -.03em;
-            text-transform: none;
-            margin-bottom: 18px;
-            text-wrap: balance;
-        }
+.home-hero-wrap .heroSwiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+    filter: saturate(.96) contrast(1.03);
+    display: block;
+}
 
-        .home-hero-wrap .hero-overlay p {
-            font-size: 18px;
-            line-height: 1.75;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 620px;
-        }
+.home-hero-wrap .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: 0 72px;
+    background: linear-gradient(
+        94deg,
+        rgba(8, 19, 35, 0.78),
+        rgba(8, 19, 35, 0.34) 48%,
+        rgba(8, 19, 35, 0.08)
+    );
+    pointer-events: none;
+}
 
-        .home-hero-wrap .hero-nav {
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 10px 22px rgba(13, 42, 90, 0.10);
-            border: 1px solid rgba(47, 111, 177, 0.10);
-        }
+.home-hero-wrap .hero-overlay > div {
+    max-width: 760px;
+}
 
-        .home-hero-wrap .hero-nav::after {
-            color: #315d8f;
-            font-size: 20px;
-            font-weight: 800;
-        }
+.home-hero-wrap .hero-overlay h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(34px, 4.2vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    text-transform: none;
+    margin-bottom: 18px;
+    text-wrap: balance;
+}
 
-        .home-hero-wrap .hero-prev {
-            left: -26px;
-        }
+.home-hero-wrap .hero-overlay p {
+    font-size: 18px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 620px;
+}
 
-        .home-hero-wrap .hero-next {
-            right: -26px;
-        }
+.home-hero-wrap .hero-nav {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 22px rgba(13, 42, 90, 0.10);
+    border: 1px solid rgba(47, 111, 177, 0.10);
+    z-index: 5;
+}
 
-        .home-hero-wrap .hero-pagination {
-            bottom: 14px;
-        }
+.home-hero-wrap .hero-nav::after {
+    color: #315d8f;
+    font-size: 20px;
+    font-weight: 800;
+}
 
+.home-hero-wrap .hero-prev {
+    left: 16px;
+}
+
+.home-hero-wrap .hero-next {
+    right: 16px;
+}
+
+.home-hero-wrap .hero-pagination {
+    bottom: 14px;
+    z-index: 5;
+}
         @media (max-width: 991px) {
             .home-hero-wrap {
                 padding: 0;
@@ -441,6 +473,204 @@
                 display: none;
             }
         }
+
+        /* ===== CONTACT SECTION FIX ===== */
+#contact {
+    min-height: auto;
+    padding-bottom: 60px;
+}
+
+#contact .row {
+    --bs-gutter-x: 34px;
+    --bs-gutter-y: 28px;
+    align-items: flex-start;
+}
+
+#contact .col-md-7 {
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%;
+}
+
+#contact .col-md-5 {
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+}
+
+.contact-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.contact-form input[name="name"],
+.contact-form input[name="email"],
+.contact-form input[name="subject"] {
+    grid-column: span 4;
+    height: 44px;
+}
+
+.contact-form textarea {
+    grid-column: span 4;
+    min-height: 130px;
+    resize: vertical;
+}
+
+.contact-form .btn-submit {
+    grid-column: span 1;
+    width: fit-content;
+    min-width: 90px;
+    height: 42px;
+}
+
+.map-box {
+    width: 100%;
+    height: 260px;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.map-box iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.address {
+    margin-top: 12px;
+    color: #1f3550;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+@media (max-width: 991px) {
+    .home-hero-wrap {
+        padding: 0;
+    }
+
+    .home-hero-wrap .hero-section {
+        width: calc(100% - 28px);
+        max-width: calc(100% - 28px);
+        margin: 12px auto 0;
+    }
+
+    .home-hero-wrap .hero {
+        height: clamp(360px, 58vw, 520px);
+        border-radius: 18px;
+    }
+
+    .home-hero-wrap .hero-overlay {
+        padding: 0 24px;
+    }
+
+    .home-hero-wrap .hero-prev {
+        left: 12px;
+    }
+
+    .home-hero-wrap .hero-next {
+        right: 12px;
+    }
+
+    #contact .col-md-7,
+    #contact .col-md-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .map-box {
+        height: 300px;
+    }
+}
+
+@media (max-width: 575px) {
+    .home-hero-wrap .hero-section {
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        margin-top: 10px;
+    }
+
+    .home-hero-wrap .hero {
+        height: clamp(260px, 78vw, 420px);
+        border-radius: 16px;
+    }
+
+    .home-hero-wrap .hero-overlay h1 {
+        font-size: 28px;
+    }
+
+    .home-hero-wrap .hero-overlay p {
+        font-size: 15px;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form input[name="name"],
+    .contact-form input[name="email"],
+    .contact-form input[name="subject"],
+    .contact-form textarea,
+    .contact-form .btn-submit {
+        grid-column: span 1;
+    }
+
+    .map-box {
+        height: 260px;
+    }
+}
+/* ===== CONTACT CENTER FIX ===== */
+#contact {
+    min-height: auto !important;
+    padding-top: 0px ;
+    padding-bottom: 70px !important;
+}
+
+#contact > .row {
+    max-width: 1320px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+}
+
+#contact .col-md-4 {
+    flex: 0 0 52% !important;
+    max-width: 52% !important;
+}
+
+#contact .col-md-5 {
+    flex: 0 0 40% !important;
+    max-width: 40% !important;
+}
+
+#contact .contact-footer-names,
+#contact .contact-footer-names {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+}
+
+/* map biar enak ukurannya */
+#contact .map-box {
+    width: 100% !important;
+    height: 260px !important;
+}
+
+/* tablet / hp */
+@media (max-width: 991px) {
+    #contact > .row {
+        max-width: 720px;
+    }
+
+    #contact .col-md-5,
+    #contact .col-md-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    #contact .map-box {
+        height: 300px !important;
+    }
+}
     </style>
 
 
@@ -696,81 +926,48 @@
         </section>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        new Swiper('.heroSwiper', {
-            loop: true,
-            autoplay: {
-                delay: 3000,
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    const heroSlideCount = document.querySelectorAll('.heroSwiper .swiper-slide').length;
+
+    new Swiper('.heroSwiper', {
+        loop: heroSlideCount > 1,
+        watchOverflow: true,
+        autoplay: false,
+        grabCursor: heroSlideCount > 1,
+
+        navigation: {
+            nextEl: '.hero-next',
+            prevEl: '.hero-prev',
+        },
+
+        pagination: {
+            el: '.hero-pagination',
+            clickable: true,
+            dynamicBullets: heroSlideCount > 1
+        }
+    });
+
+    document.querySelectorAll('.projectSwiper').forEach((slider) => {
+        const projectSlideCount = slider.querySelectorAll('.swiper-slide').length;
+
+        new Swiper(slider, {
+            loop: projectSlideCount > 1,
+            watchOverflow: true,
+
+            autoplay: projectSlideCount > 1 ? {
+                delay: 2600,
                 disableOnInteraction: false,
-            },
-            grabCursor: true,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+            } : false,
+
+            speed: 650,
+
             pagination: {
-                el: '.swiper-pagination',
+                el: slider.querySelector('.project-pagination'),
                 clickable: true,
-                dynamicBullets: true
             }
         });
-
-        const navLinks = document.querySelectorAll('[data-nav-link]');
-        document.querySelectorAll('.projectSwiper').forEach((slider) => {
-            new Swiper(slider, {
-                loop: true,
-                autoplay: {
-                    delay: 2600,
-                    disableOnInteraction: false,
-                },
-                speed: 650,
-                pagination: {
-                    el: slider.querySelector('.project-pagination'),
-                    clickable: true,
-                }
-            });
-        });
-
-        const sections = ['home', 'about', 'genset', 'service', 'project', 'blog', 'contact']
-            .map(id => document.getElementById(id))
-            .filter(Boolean);
-
-        const activateNav = (sectionId) => {
-            navLinks.forEach(link => {
-                const targetId = link.getAttribute('data-nav-link');
-                link.classList.toggle('active', targetId === sectionId);
-            });
-        };
-
-        const handleScrollSpy = () => {
-            // Fix buat Home pas di paling atas
-            if (window.scrollY < 120) {
-                activateNav('home');
-                return;
-            }
-
-            let currentSection = "";
-            const offset = 210; // Sesuaikan dengan scroll-padding-top
-
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - offset) {
-                    currentSection = section.getAttribute("id");
-                }
-            });
-
-            // Paksa Contact aktif jika sudah di paling bawah mentok
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) {
-                currentSection = "contact";
-            }
-
-            if (currentSection) {
-                activateNav(currentSection);
-            }
-        };
-
-        window.addEventListener('scroll', handleScrollSpy);
-        handleScrollSpy(); // Cek sekali pas load
-    </script>
+    });
+</script>
 @endsection
