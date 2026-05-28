@@ -1,21 +1,23 @@
 @extends('layouts.userLayouts')
 
 @section('content')
-    <div class="page-section">
+    <div class="page-section detail-page service-detail-page">
+        <div class="detail-page-inner">
 
         <h2 class="page-title-elegant">
             {{ $service->name }}
         </h2>
 
-        <div class="row align-items-center">
+        <div class="row detail-content-row">
 
-            <div class="col-md-6">
-                <div class="overflow-hidden">
-                    <img src="{{ $service->image_url }}" class="w-100" style="height:400px; object-fit:cover;">
+            <div class="col-lg-6">
+                <div class="detail-media-box">
+                    <img src="{{ $service->image_url }}" class="detail-media-img" alt="{{ $service->name }}">
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-lg-6">
+                <div class="detail-copy">
 
                 <p class="text-muted fs-5">
                     {{ $service->short_description }}
@@ -25,10 +27,12 @@
                     {!! $service->description !!}
                 </div>
 
+                </div>
             </div>
 
         </div>
         @include('partials.footer-brands')
+        </div>
 
     </div>
 @endsection
