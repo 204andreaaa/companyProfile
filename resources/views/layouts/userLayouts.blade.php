@@ -349,6 +349,99 @@
             background: linear-gradient(90deg, var(--site-accent-soft), var(--site-accent));
         }
 
+        /* ===== DETAIL PAGES ===== */
+        .detail-page {
+            padding-top: clamp(46px, 5vw, 86px);
+            padding-bottom: clamp(28px, 4vw, 54px);
+        }
+
+        .detail-page-inner {
+            width: min(100%, 1500px);
+            margin: 0 auto;
+        }
+
+        .detail-content-row {
+            --bs-gutter-x: clamp(28px, 5vw, 84px);
+            --bs-gutter-y: 30px;
+            align-items: center;
+        }
+
+        .detail-media-box {
+            width: 100%;
+            height: clamp(260px, 30vw, 430px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .detail-media-img {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            display: block !important;
+            border-radius: 0;
+        }
+
+        .detail-copy {
+            max-width: 760px;
+        }
+
+        .detail-copy,
+        .detail-copy p {
+            line-height: 1.75;
+        }
+
+        .blog-detail-page .detail-media-box {
+            width: min(100%, 1040px);
+            height: clamp(240px, 34vw, 460px);
+            margin: 0 auto 28px;
+        }
+
+        .blog-detail-page .blog-title {
+            width: min(100%, 1040px);
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--site-heading);
+            font-size: clamp(22px, 2.4vw, 30px);
+            line-height: 1.25;
+            font-weight: 800;
+        }
+
+        .blog-detail-page .breadcrumb-custom,
+        .blog-detail-page .text-muted,
+        .blog-detail-page .blog-content {
+            width: min(100%, 1040px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blog-detail-page .blog-content {
+            font-size: 16px;
+            line-height: 1.85;
+        }
+
+        @media (max-width: 991px) {
+            .detail-content-row {
+                --bs-gutter-x: 0;
+            }
+
+            .detail-copy {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .detail-media-box,
+            .blog-detail-page .detail-media-box {
+                height: clamp(220px, 70vw, 320px);
+            }
+        }
+
         /* ===== BUTTON ===== */
         .btn-submit,
         .btn.btn-dark,
@@ -1249,6 +1342,31 @@
                 });
             }
 
+            function sectionFromPath() {
+                const path = window.location.pathname.replace(/\/+$/, '') || '/';
+
+                if (path === '/') {
+                    return null;
+                }
+
+                if (path.startsWith('/service')) return 'service';
+                if (path.startsWith('/blog')) return 'blog';
+                if (path.startsWith('/genset')) return 'genset';
+                if (path.startsWith('/about')) return 'about';
+                if (path.startsWith('/project')) return 'project';
+                if (path.startsWith('/contact')) return 'contact';
+
+                return 'home';
+            }
+
+            const fixedSection = sectionFromPath();
+
+            if (fixedSection) {
+                window.addEventListener('load', () => setActive(fixedSection));
+                setActive(fixedSection);
+                return;
+            }
+
             function detectSection() {
             const headerHeight = document.querySelector('.header-sticky-wrapper')?.offsetHeight ?? 120;
             const checkPoint = headerHeight + 160;
@@ -1263,7 +1381,7 @@
                 }
             });
 
-            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 80) {
+            if (document.getElementById('contact') && (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 80) {
                 current = 'contact';
             }
 
